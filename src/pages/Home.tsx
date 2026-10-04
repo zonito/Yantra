@@ -28,9 +28,9 @@ export default function Home() {
           One funnel. Independent risk gates. Evidence at every handoff.
         </h1>
         <p className="mt-3 max-w-2xl text-sm leading-relaxed text-zinc-400">
-          From book-first discovery to a staged wheel setup — prioritizing existing exposure,
-          accepting three strong ideas or fewer, and keeping Google Tasks as the sole Pending
-          Trades ledger. Click any stage to go inside.
+          From ticker curation through Sutradhara scoring, nightly volatility work, the three
+          staged wheel jobs and human execution — down to the ledger that keeps score. Click any
+          node to see its inputs, its sub-components, and its outputs.
         </p>
       </motion.div>
 
