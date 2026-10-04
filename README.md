@@ -24,11 +24,11 @@ npm install
 npm run dev
 ```
 
-Open http://localhost:3011
+Open http://localhost:3014
 
 ## Notes
 
-- Dev server port is **3011** (3000, 3005, 3007, 3008, 3009, 3010, 8000 and
-  8400 are already taken by sibling apps).
+- Dev server port is **3014** (sibling apps already hold 3000–3013, 8000 and
+  8400 — Smriti 3011, Panchang 3012, Sadhana 3013).
 - `npm run build` type-checks (`tsc -b`) and produces the production bundle.
 - Dark theme throughout. No backend — all content is the local data model.

@@ -37,7 +37,7 @@ export default function Jev() {
           <h3 className="mt-2 text-lg font-semibold text-zinc-100">Position size</h3>
           <p className="mt-2 font-mono text-sm text-pink-200">full / half / skip</p>
           <p className="mt-2 text-xs leading-relaxed text-zinc-500">
-            Jev\u2019s independent read on how much size the candidate deserves.
+            Jev’s independent read on how much size the candidate deserves.
           </p>
         </motion.div>
         <motion.div
@@ -50,8 +50,8 @@ export default function Jev() {
           <h3 className="mt-2 text-lg font-semibold text-zinc-100">Airavata weight</h3>
           <p className="mt-2 font-mono text-sm text-pink-200">full / half / ignore</p>
           <p className="mt-2 text-xs leading-relaxed text-zinc-500">
-            How much weight the posture deserves, given the weekly snapshot\u2019s tier, n and
-            probability. Snapshot numbers are ground truth \u2014 Jev judges boundary cases only.
+            How much weight the posture deserves, given the weekly snapshot’s tier, n and
+            probability. Snapshot numbers are ground truth — Jev judges boundary cases only.
           </p>
         </motion.div>
       </div>
@@ -77,11 +77,11 @@ export default function Jev() {
       <div className="mt-4 rounded-2xl border border-zinc-800 bg-zinc-900/50 p-6">
         <p className="text-sm text-zinc-300">
           First review after <span className="font-semibold text-zinc-100">4 weeks or 30 scored candidates</span>,
-          whichever comes first \u2014 expected early November 2026, reported unprompted.
+          whichever comes first — expected early November 2026, reported unprompted.
         </p>
         <ul className="mt-4 space-y-3">
           <li className="text-xs leading-relaxed text-zinc-400">
-            <span className="font-semibold text-zinc-200">Sizing shadow:</span> Jev\u2019s Full bucket must
+            <span className="font-semibold text-zinc-200">Sizing shadow:</span> Jev’s Full bucket must
             beat Skip on forward 21-trading-day returns with non-overlapping 95% confidence intervals,
             and agreement with the pipeline verdict must exceed 60%.
           </li>

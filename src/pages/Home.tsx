@@ -7,7 +7,7 @@ const sections = [
   { to: '/machinery', title: 'Machinery', body: 'Sutradhara, the scoring engine, and the deterministic screener.' },
   { to: '/rules', title: 'Rules', body: 'The 29 non-negotiables plus the ratified reserve bands.' },
   { to: '/quality', title: 'Quality model', body: 'Evidence ranks the idea; independent gates protect the trade.' },
-  { to: '/handoffs', title: 'Handoffs', body: 'Where reliability is won or lost \u2014 eight boundaries, eight contracts.' },
+  { to: '/handoffs', title: 'Handoffs', body: 'Where reliability is won or lost — eight boundaries, eight contracts.' },
   { to: '/gaps', title: 'Five gaps', body: 'The highest-leverage fixes before another execution layer.' },
   { to: '/jev', title: 'Jev shadow', body: 'The observer trial: two questions, a log, and a promotion bar.' },
 ]
@@ -28,7 +28,7 @@ export default function Home() {
           One funnel. Independent risk gates. Evidence at every handoff.
         </h1>
         <p className="mt-3 max-w-2xl text-sm leading-relaxed text-zinc-400">
-          From book-first discovery to a staged wheel setup \u2014 prioritizing existing exposure,
+          From book-first discovery to a staged wheel setup — prioritizing existing exposure,
           accepting three strong ideas or fewer, and keeping Google Tasks as the sole Pending
           Trades ledger. Click any stage to go inside.
         </p>
@@ -61,7 +61,7 @@ export default function Home() {
               >
                 <h3 className="text-sm font-semibold text-zinc-100">{s.title}</h3>
                 <p className="mt-1.5 text-xs leading-relaxed text-zinc-500">{s.body}</p>
-                <p className="mt-3 text-xs font-medium text-amber-300/90">Open \u2192</p>
+                <p className="mt-3 text-xs font-medium text-amber-300/90">Open →</p>
               </Link>
             </motion.div>
           ))}

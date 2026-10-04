@@ -67,7 +67,7 @@ export default function Handoffs() {
       </h1>
       <p className="mt-3 max-w-2xl text-sm leading-relaxed text-zinc-400">
         Each boundary needs an explicit contract: who produces it, who consumes it, what
-        \u201cfresh\u201d means, and how the consumer fails when it is absent.
+        “fresh” means, and how the consumer fails when it is absent.
       </p>
       <div className="mt-8 grid gap-3 lg:grid-cols-2">
         {handoffs.map((h, i) => (

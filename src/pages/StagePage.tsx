@@ -47,7 +47,7 @@ export default function StagePage() {
           {prev && (
             <Link to={`/stage/${prev.id}`} className="group text-sm">
               <span className="block text-[11px] uppercase tracking-[0.16em] text-zinc-600">Previous</span>
-              <span className="text-zinc-300 group-hover:text-amber-200">\u2190 {prev.title}</span>
+              <span className="text-zinc-300 group-hover:text-amber-200">← {prev.title}</span>
             </Link>
           )}
         </div>
@@ -55,7 +55,7 @@ export default function StagePage() {
           {next && (
             <Link to={`/stage/${next.id}`} className="group text-sm">
               <span className="block text-[11px] uppercase tracking-[0.16em] text-zinc-600">Next</span>
-              <span className="text-zinc-300 group-hover:text-amber-200">{next.title} \u2192</span>
+              <span className="text-zinc-300 group-hover:text-amber-200">{next.title} →</span>
             </Link>
           )}
         </div>

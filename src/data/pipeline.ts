@@ -734,7 +734,7 @@ export const reliabilityPoints = [
 export const jevFacts = {
   connection: 'TypeSafe direct API as custom.typesafe (vault). Vercel AI Gateway connected but blocked on card verification \u2014 fallback only.',
   endpoint: 'POST https://api.typesafe.ai/v1/systemone \u00b7 model jev-latest \u2192 resolved jev-1.13.0',
-  verified: 'MU test 4 Oct 2026: HALF at 86% confidence, 513 input tokens, ~$0.00002, 7.8s latency (slower than the 70\u2013500ms vendor claim).',
+  verified: 'MU test 4 Oct 2026: HALF at 86% confidence, 513 input tokens, ~$0.00002. First call took 7.8s, a retry took 467.5ms \u2014 inside the 70\u2013500ms vendor claim.',
   funding: 'Account funded with $5 on 4 Oct 2026 \u2014 roughly 39 months of the estimated workload.',
   skill: 'Skill: ~/workspace/skills/typesafe/bin/jev_direct.py',
 };

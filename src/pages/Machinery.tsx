@@ -35,8 +35,8 @@ export default function Machinery() {
         Eight views, different clocks
       </h2>
       <p className="mt-2 max-w-2xl text-xs text-zinc-500">
-        effective weight\u1d62 = configured weight\u1d62 \u00d7 confidence\u1d62 \u2192 blend \u2192 agreement
-        stretch \u2192 conviction gate \u2192 signal band. Technical and volume can age within a day;
+        effective weightᵢ = configured weightᵢ × confidenceᵢ → blend → agreement
+        stretch → conviction gate → signal band. Technical and volume can age within a day;
         fundamental and valuation are deliberately weekly.
       </p>
       <div className="mt-4 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
@@ -52,7 +52,7 @@ export default function Machinery() {
               <h3 className="text-sm font-semibold text-zinc-100">{a.name}</h3>
               <span className="text-xs font-semibold text-amber-200">{a.weight}</span>
             </div>
-            <p className="mt-1 text-[11px] uppercase tracking-[0.14em] text-zinc-500">\u27f3 {a.clock}</p>
+            <p className="mt-1 text-[11px] uppercase tracking-[0.14em] text-zinc-500">⟳ {a.clock}</p>
             <p className="mt-2 text-xs text-zinc-500">{a.detail}</p>
           </motion.div>
         ))}
@@ -62,7 +62,7 @@ export default function Machinery() {
         Deterministic screener
       </h2>
       <p className="mt-2 max-w-2xl text-sm leading-relaxed text-zinc-400">
-        The scan-and-filter logic lives in Kubera code \u2014 not in job prompts. One ranked snapshot
+        The scan-and-filter logic lives in Kubera code — not in job prompts. One ranked snapshot
         feeds the 13:30 dimmer and the 14:00 pass; contract selection stays downstream.
       </p>
       <div className="mt-4 grid gap-3 lg:grid-cols-2">
@@ -88,7 +88,7 @@ export default function Machinery() {
           <ul className="mt-2 space-y-1.5">
             {screenerFacts.gates.map((g) => (
               <li key={g} className="text-xs leading-snug text-zinc-400">
-                <span className="mr-2 text-emerald-300">\u2713</span>
+                <span className="mr-2 text-emerald-300">✓</span>
                 {g}
               </li>
             ))}
