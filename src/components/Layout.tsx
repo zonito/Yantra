@@ -1,6 +1,6 @@
-import { useEffect } from 'react'
+import { Component, useEffect, type ReactNode } from 'react'
 import { Link, NavLink, Outlet, useLocation } from 'react-router-dom'
-import { AnimatePresence, motion } from 'framer-motion'
+import { motion } from 'framer-motion'
 
 const navItems = [
   { to: '/', label: 'Flow', end: true },
@@ -18,6 +18,34 @@ function ScrollToTop() {
     window.scrollTo(0, 0)
   }, [pathname])
   return null
+}
+
+/**
+ * A render crash anywhere below the header used to blank the whole page
+ * silently. This shows the error instead, so a broken route is diagnosable.
+ */
+class RouteErrorBoundary extends Component<{ children: ReactNode }, { error: string | null }> {
+  state = { error: null as string | null }
+  static getDerivedStateFromError(e: unknown) {
+    return { error: e instanceof Error ? e.message : String(e) }
+  }
+  componentDidCatch() {
+    this.setState({ error: this.state.error })
+  }
+  render() {
+    if (this.state.error) {
+      return (
+        <div className="rounded-2xl border border-red-400/30 bg-red-400/5 p-6">
+          <p className="text-sm font-semibold text-red-200">This page failed to render</p>
+          <p className="mt-2 font-mono text-xs text-red-300/70">{this.state.error}</p>
+          <Link to="/" className="mt-4 inline-block text-xs text-amber-300 hover:text-amber-200">
+            ← Back to the flow
+          </Link>
+        </div>
+      )
+    }
+    return this.props.children
+  }
 }
 
 export function Breadcrumb({ trail }: { trail: { label: string; to?: string }[] }) {
@@ -73,18 +101,17 @@ function Shell() {
           </nav>
         </div>
       </header>
-      <AnimatePresence mode="wait">
-        <motion.main
-          key={location.pathname}
-          initial={{ opacity: 0, y: 14 }}
-          animate={{ opacity: 1, y: 0 }}
-          exit={{ opacity: 0, y: -10 }}
-          transition={{ duration: 0.28, ease: 'easeOut' }}
-          className="mx-auto max-w-7xl px-4 pb-24 pt-8 sm:px-6"
-        >
+      <motion.main
+        key={location.pathname}
+        initial={{ opacity: 0, y: 14 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.28, ease: 'easeOut' }}
+        className="mx-auto max-w-7xl px-4 pb-24 pt-8 sm:px-6"
+      >
+        <RouteErrorBoundary key={location.pathname}>
           <Outlet />
-        </motion.main>
-      </AnimatePresence>
+        </RouteErrorBoundary>
+      </motion.main>
       <footer className="border-t border-zinc-800/80 py-6">
         <p className="mx-auto max-w-7xl px-4 text-[11px] text-zinc-600 sm:px-6">
           Yantra · interactive Kubera Wheel Pipeline Architecture · facts from the 4 Oct 2026 runbook
