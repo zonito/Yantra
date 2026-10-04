@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion'
-import { agentViews, screenerFacts, sutradharaSteps } from '../data/pipeline'
+import { agentViews, rebalanceNotes, screenerFacts, sutradharaSteps } from '../data/pipeline'
 import { Breadcrumb } from '../components/Layout'
 
 export default function Machinery() {
@@ -57,6 +57,52 @@ export default function Machinery() {
           </motion.div>
         ))}
       </div>
+
+      <h2 className="mt-12 text-xs font-semibold uppercase tracking-[0.18em] text-zinc-500">
+        Proposed rebalance · 4 Oct 2026 · pending implementation
+      </h2>
+      <p className="mt-2 max-w-2xl text-xs leading-relaxed text-zinc-500">
+        The composite’s job is own-worthiness — what is safe to own if assigned. Timing belongs
+        to the 13:30 dimmer, pricing to the 14:00 gates. Valuation is cut because DCF has almost
+        no predictive power over a 30–45 day put and double-counts Fundamental; the freed weight
+        goes to tails (Quantitative), premium richness (Options) and the freshest read (Technical).
+      </p>
+      <div className="mt-4 overflow-x-auto rounded-2xl border border-zinc-800">
+        <table className="w-full min-w-[560px] text-left text-xs">
+          <thead>
+            <tr className="border-b border-zinc-800 text-[10px] uppercase tracking-[0.14em] text-zinc-500">
+              <th className="px-4 py-3 font-semibold">View</th>
+              <th className="px-4 py-3 font-semibold">Now</th>
+              <th className="px-4 py-3 font-semibold">Proposed</th>
+              <th className="px-4 py-3 font-semibold">Why</th>
+            </tr>
+          </thead>
+          <tbody>
+            {agentViews.map((a) => (
+              <tr key={a.name} className="border-b border-zinc-800/60 last:border-0">
+                <td className="px-4 py-2.5 font-semibold text-zinc-200">{a.name}</td>
+                <td className="px-4 py-2.5 font-mono text-zinc-400">{a.weight}</td>
+                <td className="px-4 py-2.5 font-mono">
+                  {a.proposed ? (
+                    <span className="font-semibold text-amber-200">{a.proposed}</span>
+                  ) : (
+                    <span className="text-zinc-600">—</span>
+                  )}
+                </td>
+                <td className="px-4 py-2.5 leading-relaxed text-zinc-500">{a.why}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+      <ul className="mt-4 space-y-2">
+        {rebalanceNotes.map((n) => (
+          <li key={n.slice(0, 24)} className="text-xs leading-relaxed text-zinc-500">
+            <span className="mr-2 text-amber-300/80">•</span>
+            {n}
+          </li>
+        ))}
+      </ul>
 
       <h2 className="mt-12 text-xs font-semibold uppercase tracking-[0.18em] text-zinc-500">
         Deterministic screener

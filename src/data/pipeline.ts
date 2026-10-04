@@ -373,6 +373,10 @@ export interface AgentView {
   weight: string;
   clock: string;
   detail: string;
+  /** proposed weight after the 4 Oct 2026 rebalance review; null = keep */
+  proposed: string | null;
+  /** one-line reason for the proposed change */
+  why: string;
 }
 
 export const sutradharaSteps: { n: string; title: string; body: string }[] = [
@@ -386,14 +390,21 @@ export const sutradharaSteps: { n: string; title: string; body: string }[] = [
 ];
 
 export const agentViews: AgentView[] = [
-  { name: 'Fundamental', weight: '22%', clock: '168h', detail: 'Growth, quality, balance sheet' },
-  { name: 'Valuation', weight: '18%', clock: '168h', detail: 'DCF, multiples, margin of safety' },
-  { name: 'Quantitative', weight: '18%', clock: '24h', detail: 'Risk-adjusted return, factors, tails' },
-  { name: 'Sentiment', weight: '12%', clock: '72h', detail: 'News, analysts, flows, transcripts' },
-  { name: 'Options', weight: '12%', clock: '24h', detail: 'Raw Varuna chains: IV, flow, OI, liquidity, squeeze' },
-  { name: 'Technical', weight: '8%', clock: '1h', detail: 'Momentum, trend, volatility, levels' },
-  { name: 'Volume', weight: '5%', clock: '1h', detail: 'Liquidity, participation, friction' },
-  { name: 'Recovery', weight: '5%', clock: '24h', detail: 'Drawdown depth, duration, recovery' },
+  { name: 'Fundamental', weight: '22%', clock: '168h', detail: 'Growth, quality, balance sheet', proposed: null, why: 'Keep. Own-worthiness is the anchor for the wheel.' },
+  { name: 'Valuation', weight: '18%', clock: '168h', detail: 'DCF, multiples, margin of safety', proposed: '10%', why: 'DCF has almost no predictive power over a 30–45 day put; it double-counts Fundamental.' },
+  { name: 'Quantitative', weight: '18%', clock: '24h', detail: 'Risk-adjusted return, factors, tails', proposed: '22%', why: 'Tails are the actual business risk in put selling.' },
+  { name: 'Sentiment', weight: '12%', clock: '72h', detail: 'News, analysts, flows, transcripts', proposed: null, why: 'Fine as is.' },
+  { name: 'Options', weight: '12%', clock: '24h', detail: 'Raw Varuna chains: IV, flow, OI, liquidity, squeeze', proposed: '14%', why: 'IV richness is the income itself.' },
+  { name: 'Technical', weight: '8%', clock: '1h', detail: 'Momentum, trend, volatility, levels', proposed: '10%', why: 'The freshest view deserves enough weight to matter when the tape turns.' },
+  { name: 'Volume', weight: '5%', clock: '1h', detail: 'Liquidity, participation, friction', proposed: null, why: 'Fine; option liquidity is checked downstream anyway.' },
+  { name: 'Recovery', weight: '5%', clock: '24h', detail: 'Drawdown depth, duration, recovery', proposed: null, why: 'Fine.' },
+];
+
+/** 4 Oct 2026 rebalance review notes (proposed, not yet implemented) */
+export const rebalanceNotes = [
+  'Clock vs weight mismatch: Technical + Volume refresh hourly but carry only 13% combined; Fundamental + Valuation refresh weekly but carry 40%. In a fast week the score is anchored by stale evidence unless confidence decays aggressively on the 168h views.',
+  'The composite’s job is own-worthiness (what is safe to own if assigned). Timing belongs to the 13:30 dimmer, pricing to the 14:00 gates — the weights do not need to carry either.',
+  'Structural gap: realized put outcomes do not feed back into these weights. The outcome loop should own future recalibration once it exists.',
 ];
 
 export const screenerFacts = {
