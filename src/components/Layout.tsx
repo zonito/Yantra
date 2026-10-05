@@ -12,6 +12,10 @@ const navItems = [
   { to: '/jev', label: 'Jev' },
   { to: '/agni', label: 'Agni' },
   { to: '/airavata', label: 'Airavata' },
+  { to: '/kubera', label: 'Kubera' },
+  { to: '/varuna', label: 'Varuna' },
+  { to: '/drona', label: 'Drona' },
+  { to: '/vidhura', label: 'Vidhura' },
 ]
 
 function ScrollToTop() {

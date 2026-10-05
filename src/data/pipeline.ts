@@ -53,6 +53,8 @@ export const phases: Phase[] = [
         summary:
           'The tradeable universe is curated before any scoring runs. The live book and explicit human adds come first; automated screens are the last resort, never the first.',
         accent: '#f59e0b',
+        link: '/kubera',
+        linkLabel: 'Open the Kubera book',
         inputs: [
           { label: 'Wheel book + holdings', detail: 'Open positions and portfolio holdings lead the hunt; exposure is understood before any new-risk search.' },
           { label: 'Shortlist to Buy', detail: 'Read-only hunting ground of 36 high-intent names. Never added to, removed from, or reordered by jobs.' },
@@ -109,6 +111,8 @@ export const phases: Phase[] = [
         summary:
           'One JSONL record per screener-universe ticker, appended before the trading day begins. Idempotent: a ticker with today’s record is skipped.',
         accent: '#38bdf8',
+        link: '/varuna',
+        linkLabel: 'Open the Varuna data plane',
         inputs: [
           { label: 'Screener universe tickers', detail: 'Every name the 14:00 discovery pass can consider.' },
           { label: 'Varuna federation', detail: 'iv-backfill jobs on localhost:8400; the chain source of truth.' },
@@ -805,11 +809,92 @@ export const airavataReliability = [
 ];
 
 export const satelliteApps: { name: string; port: string; role: string; detail: string }[] = [
-  { name: 'Varuna', port: ':8400', role: 'Cache-first data plane', detail: 'FMP, Massive, Yahoo, CBOE, FINRA behind one envelope with TTLs and circuit breakers. Every engine reads through it; nothing touches vendors directly.' },
-  { name: 'Kubera', port: ':8000', role: 'Portfolio + wheel book', detail: 'Holdings, transactions, watchlists, the deterministic wheel-candidates API, momentum scores, correlation peers. The 13:30/14:00/14:30 jobs read here first.' },
-  { name: 'Drona', port: ':3008', role: 'Technicals', detail: 'premium-lab per ticker: support, resistance, trend, RSI14, Bollinger. No volume-profile fields.' },
-  { name: 'Vidhura', port: ':3009', role: 'Valuation + holders', detail: 'Valuation read plus institutional-holder data. Coverage is partial — missing never means low.' },
-  { name: 'Kamadhenu', port: ':3005', role: 'Commodities', detail: 'Commodity briefs and detail reads for the macro sleeve of the briefings.' },
-  { name: 'Rashi', port: ':3007', role: 'Forex', detail: '65 currencies: rates, convert, history. Quoted coverage, not 138.' },
-  { name: 'Bhisma', port: ':3010', role: 'Health only', detail: 'Programmatic reads go through its internal functions; treat its published hit rates with skepticism.' },
+  { name: 'Kamadhenu', port: ':3005', role: 'Commodities', detail: 'Commodity briefs and detail reads for the macro sleeve of the briefings — not part of the wheel pipeline.' },
+  { name: 'Rashi', port: ':3007', role: 'Forex', detail: '65 currencies: rates, convert, history. Serves the briefings — not part of the wheel pipeline.' },
+  { name: 'Bhisma', port: ':3010', role: 'Health only', detail: 'Programmatic reads go through its internal functions; treat its published hit rates with skepticism. Not part of the wheel pipeline.' },
+];
+
+// ---------------------------------------------------------------------------
+// Pipeline apps with full pages — Kubera, Varuna, Drona, Vidhura
+// ---------------------------------------------------------------------------
+
+export const kuberaFacts = {
+  repo: 'zonito/kubera',
+  base: 'http://100.125.239.56:8000',
+  role: "The pipeline's home base: the wheel book, the deterministic discovery API, the watchlist universe, momentum and correlation. The 13:30/14:00/14:30 jobs read here first.",
+  universe: 'watchlists.json is the single universe every downstream stage reads. Lists are organized by theme/story (US Oncology Biotech, GLP-1 & Obesity…), never by grouping labels. "Shortlisted To Buy" (wl_shortlisted) is read-only — never added to, removed from, or reordered by jobs.',
+};
+
+export const kuberaRouters: EngineRouter[] = [
+  { name: 'POST /api/v1/wheel-strategy/summary', kind: 'book', detail: 'The wheel book: open positions with per-account reserve_net_of_credit, covered/uncovered contracts, shares_at_open, win rate, MTD realized premium. The standing read path for reserve math.' },
+  { name: 'GET /api/v1/wheel/candidates', kind: 'discovery', detail: 'Deterministic ranked put-candidate snapshot (TTL-guarded, 1h). Gates enforced: composite ≥ 60, dual-bullish, percentile > 50, no earnings within 45d, IV-rank floor, one per cluster. POST /api/v1/wheel/candidates/refresh forces a rescan (~10–30s).' },
+  { name: 'POST /api/v1/portfolios/metrics', kind: 'portfolio', detail: 'Holdings, values and risk metrics per profile; margin_insights.accounts[] gives per-account net_liquidation, cash, available_funds, cushion_pct. /price-refresh is the fast price-only variant.' },
+  { name: 'GET /api/v1/momentum/scores', kind: 'momentum', detail: 'Dual momentum signal, cross-sectional percentile, RSI, VaR95, sortino for ~450 tickers in one pull. Powers the 13:30 dimmer.' },
+  { name: 'GET /api/v1/agents/scores/{symbol}', kind: 'composite', detail: 'Composite AI score with sub-scores, briefing, risks and catalysts per ticker.' },
+  { name: 'GET /api/v1/correlation/peers/{symbol}', kind: 'pairs', detail: '90-day empirical correlation peers with beta, lead-lag days, regime correlation splits and cluster assignment. Computed weekly.' },
+  { name: 'GET /api/v1/watchlists', kind: 'universe', detail: 'Theme watchlist index (?metadata_only=true); per-list detail for tickers. The curated universe the pipeline hunts in.' },
+  { name: 'GET /api/v1/stock/news', kind: 'news', detail: 'Recent news per symbol batch — folded into binary-event timing at 14:00.' },
+  { name: 'GET /api/v1/transactions/recent', kind: 'ledger', detail: 'Per-account shares, avg_price and trade counts (Zonito vs Nikhila) — the source for unencumbered-share math in the covered-call scan.' },
+  { name: 'POST /api/v1/screener/run', kind: 'screen', detail: 'Ad-hoc screens; GET /api/v1/screener/presets for saved ones. Supplemental discovery only.' },
+];
+
+export const varunaFacts = {
+  repo: 'zonito/varuna',
+  base: 'http://127.0.0.1:8400 (tailnet 100.125.239.56:8400)',
+  role: 'The cache-first data plane under every engine. Vendors (FMP, Massive, Yahoo, FINRA, EODHD) sit behind one envelope with TTLs and circuit breakers; nothing in the pipeline touches a vendor directly.',
+  contract: 'docs/contract.md and docs/openapi.json are generated from the FastAPI route table by scripts/contract_gen.py — never hand-edited. docs/endpoints.md is the hand-written operator guide.',
+};
+
+export const varunaRouters: EngineRouter[] = [
+  { name: 'POST /v1/varuna/options/overview', kind: 'batch', detail: 'One aggregated row per symbol (1–60): quote/change/volume, live ATM IV30/IV90 from a bounded chain read, IV history from the permanent store, EOD bars. Per-symbol failures never fail the batch.' },
+  { name: 'POST /v1/varuna/jobs/iv-backfill', kind: 'jobs', detail: 'Nightly IV history backfill per ticker (00:05 launchd). GET /v1/varuna/jobs/iv-backfill/{ticker} reports status.' },
+  { name: 'GET /v1/vendors/massive/options/chain/{symbol}', kind: 'massive', detail: 'Chain snapshot with strike/expiry filters and pagination. /chain-complete/{symbol} for the full multi-expiry surface in one call; /contract/{symbol}/{contract} for a single contract.' },
+  { name: 'GET /v1/vendors/massive/options/iv-history/{symbol}', kind: 'massive', detail: 'Reconstructed EOD IV points from the permanent store. from+to required; compute=false is read-only and never fans out to vendors.' },
+  { name: 'POST /v1/vendors/fmp/query', kind: 'fmp', detail: 'Escape hatch: {endpoint, params} — covers economic-calendar, earnings and everything without a shorthand. batch-query and watchlist-quotes batch it.' },
+  { name: 'GET /v1/vendors/fmp/earnings/{symbol}', kind: 'fmp', detail: 'Earnings events including upcoming (verified: NVDA 18 Nov 2026). Shorthands also exist for quote, ohlcv, fundamentals, shares-float, institutional-ownership.' },
+  { name: 'GET /v1/vendors/yahoo/chart/{symbol}', kind: 'yahoo', detail: 'OHLCV chart data; /holders/{symbol} for institutional holders (the Vidhura read path). CBOE is disabled server-side (503 provider_disabled).' },
+  { name: 'GET /v1/sources/finra/short-interest/{symbol}', kind: 'sources', detail: 'Latest FINRA short-interest print; /history adds max_points. Generic POST /v1/sources/{provider}/{resource} proxies anything else.' },
+  { name: 'GET /v1/apps/{app}/…', kind: 'proxies', detail: 'Thin proxies to downstream apps (agni signals, airavata posture + premium-lab, drona/vidura premium-lab). Quick checks only — prefer each app’s native protocol.' },
+  { name: 'GET /, /recent-requests, /recent-errors, /outbound', kind: 'ops', detail: 'Internal ops dashboard (excluded from the contract): live request/error/outbound tracing per X-Varuna-Source caller.' },
+];
+
+export const varunaConventions = [
+  { title: 'One header, every call', body: 'X-Varuna-Source identifies the caller (Molang, Agni, Airavata…). The ops dashboard attributes latency, hit rate and errors per source from it.' },
+  { title: 'One envelope', body: 'Success: {ok:true, code, data}. Errors: {ok:false, code, error:{type, message, trace_id, vendor, retry_after_s}} — the trace_id goes in every bug report.' },
+  { title: 'Cache metadata on every vendor payload', body: '{vendor, fetched_at, cache:{hit, stale, ttl_s}}. Check cache.hit before assuming freshness; stale is served with stale:true rather than failing.' },
+  { title: 'Rate limits and breakers', body: '429s carry error.type=rate_limited with retry_after_s — back off, never hammer. Per-provider circuit breakers at /v1/varuna/breakers/status.' },
+];
+
+export const dronaFacts = {
+  repo: 'zonito/drona',
+  base: 'http://100.125.239.56:3008',
+  role: 'Technicals input for the pipeline: support/resistance/trend/RSI reads consumed at 14:00 for entries, exits and strike geometry.',
+};
+
+export const dronaRouters: EngineRouter[] = [
+  { name: 'GET /api/v1/stocks/{symbol}', kind: 'record', detail: 'Canonical Drona market-data record: quote/profile fields plus derived context.' },
+  { name: 'GET /api/v1/stocks/{symbol}/technical', kind: 'analysis', detail: 'Computed indicators, composite score, summary, event study and return distribution. Does not return the full ten-year candle series.' },
+  { name: 'GET /api/v1/stocks/{symbol}/premium-lab', kind: 'compact', detail: 'Cached technical summary the pipeline actually reads: support, resistance, trend, RSI, Bollinger state.' },
+];
+
+export const dronaCaveats = [
+  { title: 'RSI buckets do not predict', body: 'On 454 tickers / 5y: RSI<30 forward returns match the base rate. Only proximity to the 126d high carries signal.' },
+  { title: 'Drona support is not the 126d low', body: 'Median absolute gap 16.5%; only 20% within 2%. Use as a secondary reference level — capitulation math runs on the computed 126d low.' },
+  { title: 'Drona RSI is redundant', body: 'Correlation 0.883 with a self-computed RSI — compute it directly instead of paying for the read.' },
+];
+
+export const vidhuraFacts = {
+  repo: 'No public repo found — documented from verified usage only',
+  base: 'http://100.125.239.56:3009',
+  role: 'Valuation input for the pipeline: P/E, P/B, analyst targets and ratings consumed at 14:00 for the fundamentals read.',
+};
+
+export const vidhuraReads: EngineRouter[] = [
+  { name: 'GET /api/v1/stocks/{symbol}/valuation', kind: 'verified', detail: 'P/E, P/B, analyst target/upside, rating and assessment per ticker — the read the 14:00 pass uses. Verified live in the wheel job.' },
+  { name: 'GET /v1/apps/vidura/premium-lab/{symbol}', kind: 'via Varuna', detail: 'Thin Varuna proxy for quick checks; prefer the native route for real reads.' },
+];
+
+export const vidhuraCaveats = [
+  { title: 'Coverage is partial', body: '93/454 tickers in the validation sample — missing never means low. Treat absence as unknown, not as a signal.' },
+  { title: 'High short interest is orthogonal', body: 'High short % flags beaten-down names but is statistically independent of technicals (R² 0.031). Keep it as its own gauge, not a technical confirm.' },
 ];

@@ -10,6 +10,10 @@ import Gaps from './pages/Gaps'
 import Jev from './pages/Jev'
 import Agni from './pages/Agni'
 import Airavata from './pages/Airavata'
+import Kubera from './pages/Kubera'
+import Varuna from './pages/Varuna'
+import Drona from './pages/Drona'
+import Vidhura from './pages/Vidhura'
 
 // NOTE: ./components/Layout exports the Shell as default under the name App
 // (header + animated outlet). Routes are declared here.
@@ -28,6 +32,10 @@ export default function Root() {
           <Route path="jev" element={<Jev />} />
           <Route path="agni" element={<Agni />} />
           <Route path="airavata" element={<Airavata />} />
+          <Route path="kubera" element={<Kubera />} />
+          <Route path="varuna" element={<Varuna />} />
+          <Route path="drona" element={<Drona />} />
+          <Route path="vidhura" element={<Vidhura />} />
           <Route path="*" element={<Home />} />
         </Route>
       </Routes>
