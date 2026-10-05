@@ -10,6 +10,8 @@ const navItems = [
   { to: '/handoffs', label: 'Handoffs' },
   { to: '/gaps', label: 'Gaps' },
   { to: '/jev', label: 'Jev' },
+  { to: '/agni', label: 'Agni' },
+  { to: '/airavata', label: 'Airavata' },
 ]
 
 function ScrollToTop() {

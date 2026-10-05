@@ -2,9 +2,12 @@ import { Link } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import { FlowDiagram } from '../components/Flow'
 import { Breadcrumb } from '../components/Layout'
+import { satelliteApps } from '../data/pipeline'
 
 const sections = [
   { to: '/machinery', title: 'Machinery', body: 'Sutradhara, the scoring engine, and the deterministic screener.' },
+  { to: '/agni', title: 'Agni', body: 'Options intelligence: signals, flow, odds, breach ratio, yield screens.' },
+  { to: '/airavata', title: 'Airavata', body: 'Smart-money posture with its reliability receipt — advisory, never a gate.' },
   { to: '/rules', title: 'Rules', body: 'The 29 non-negotiables plus the ratified reserve bands.' },
   { to: '/quality', title: 'Quality model', body: 'Evidence ranks the idea; independent gates protect the trade.' },
   { to: '/handoffs', title: 'Handoffs', body: 'Where reliability is won or lost — eight boundaries, eight contracts.' },
@@ -63,6 +66,36 @@ export default function Home() {
                 <p className="mt-1.5 text-xs leading-relaxed text-zinc-500">{s.body}</p>
                 <p className="mt-3 text-xs font-medium text-amber-300/90">Open →</p>
               </Link>
+            </motion.div>
+          ))}
+        </div>
+      </div>
+
+      <div className="mt-14">
+        <h2 className="text-xs font-semibold uppercase tracking-[0.18em] text-zinc-500">
+          Supporting cast
+        </h2>
+        <p className="mt-2 max-w-2xl text-xs leading-relaxed text-zinc-500">
+          The remaining apps behind the pipeline. Every one reads through Varuna —
+          nothing touches a vendor directly.
+        </p>
+        <div className="mt-4 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+          {satelliteApps.map((s, i) => (
+            <motion.div
+              key={s.name}
+              className="rounded-2xl border border-zinc-800 bg-zinc-900/50 p-5"
+              initial={{ opacity: 0, y: 16 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.4 + i * 0.05, duration: 0.35 }}
+            >
+              <div className="flex items-baseline justify-between gap-2">
+                <h3 className="text-sm font-semibold text-zinc-100">{s.name}</h3>
+                <span className="font-mono text-[11px] text-zinc-500">{s.port}</span>
+              </div>
+              <p className="mt-1 text-[11px] font-semibold uppercase tracking-[0.14em] text-amber-300/70">
+                {s.role}
+              </p>
+              <p className="mt-2 text-xs leading-relaxed text-zinc-500">{s.detail}</p>
             </motion.div>
           ))}
         </div>

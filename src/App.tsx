@@ -8,6 +8,8 @@ import Quality from './pages/Quality'
 import Handoffs from './pages/Handoffs'
 import Gaps from './pages/Gaps'
 import Jev from './pages/Jev'
+import Agni from './pages/Agni'
+import Airavata from './pages/Airavata'
 
 // NOTE: ./components/Layout exports the Shell as default under the name App
 // (header + animated outlet). Routes are declared here.
@@ -24,6 +26,8 @@ export default function Root() {
           <Route path="handoffs" element={<Handoffs />} />
           <Route path="gaps" element={<Gaps />} />
           <Route path="jev" element={<Jev />} />
+          <Route path="agni" element={<Agni />} />
+          <Route path="airavata" element={<Airavata />} />
           <Route path="*" element={<Home />} />
         </Route>
       </Routes>

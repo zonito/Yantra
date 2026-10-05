@@ -131,6 +131,8 @@ export const phases: Phase[] = [
         summary:
           'Turns raw IV history into decision context: richness, fear pricing, tail honesty and dealer positioning. Context only — Agni never triggers an entry.',
         accent: '#34d399',
+        link: '/agni',
+        linkLabel: 'Open the Agni engine',
         inputs: [
           { label: 'IV history', detail: 'The gap-free series from the nightly backfill.' },
           { label: 'Live option chains', detail: 'Current surfaces for term structure and wall computation.' },
@@ -209,6 +211,8 @@ export const phases: Phase[] = [
         summary:
           'Handles positions first, targets rolls at 28–21 DTE, and uses the deterministic candidate API only as supplemental discovery. Candidates clear hard gates, then pass six context inputs before ≤3 ideas are staged to Google Tasks.',
         accent: '#34d399',
+        link: '/airavata',
+        linkLabel: 'Open the Airavata engine',
         inputs: [
           { label: 'Wheel book', detail: 'Positions first: rolls targeted at 28–21 DTE for net credit, never under 14 DTE.' },
           { label: 'Candidate API', detail: 'Deterministic ranked snapshot — supplemental discovery only, never displacing a book or watchlist name.' },
@@ -298,7 +302,7 @@ export const phases: Phase[] = [
         ],
         subcomponents: [
           { name: 'Review', detail: 'Accept, change, or reject each setup. A verdict overridden is not a verdict withheld.' },
-          { name: 'IBKR order entry', detail: 'Limit orders; short puts carry GTC take-profit buybacks at 60% of credit.' },
+          { name: 'IBKR order entry', detail: 'Limit orders; short puts carry GTC take-profit buybacks at 60% profit capture (buy back at 40% of opening credit).' },
           { name: 'Reserve discipline', detail: 'Daily new risk near one third of available reserve per account; 1.5x notional ceiling, 1.75x red zone.' },
         ],
         outputs: [
@@ -735,3 +739,77 @@ export const jevFacts = {
   funding: 'Account funded with $5 on 4 Oct 2026 \u2014 roughly 39 months of the estimated workload.',
   skill: 'Skill: ~/workspace/skills/typesafe/bin/jev_direct.py',
 };
+
+// ---------------------------------------------------------------------------
+// Engine deep dives — Agni, Airavata, and the supporting cast
+// ---------------------------------------------------------------------------
+
+export interface EngineRouter {
+  name: string;
+  kind: string;
+  detail: string;
+}
+
+export const agniFacts = {
+  repo: 'zonito/agni-source',
+  base: 'http://127.0.0.1:3002 (tailnet 100.125.239.56:3002)',
+  protocols: 'tRPC (queries GET, mutations POST, URL-encoded JSON input) + a small REST surface',
+  dataPlane: 'Reads Varuna through a typed server/varuna.ts client — never vendors directly. Same cache-first discipline as Airavata.',
+  role: 'Volatility truth for the pipeline: IV richness, fear pricing, tail honesty, dealer positioning. Advisory context at 14:00 — never an entry trigger.',
+};
+
+export const agniRouters: EngineRouter[] = [
+  { name: 'signals.get', kind: 'tRPC query', detail: 'Full TickerSignals payload: spot, chainContracts, ivr.rank/ivp, VRP, put/call ratios, skew, GEX walls (callWall/putWall/zeroGamma), regime, composite verdict. The one call the 14:00 pass leans on.' },
+  { name: 'signals.refresh', kind: 'tRPC mutation', detail: 'Evicts the signal + raw-chain caches and reloads. 60s per-target cooldown on force refreshes.' },
+  { name: 'flow.get', kind: 'tRPC query', detail: 'Unusual-activity analytics: per-expiry call/put volume and OI with put/call ratios, plus strike parity chains with call/put IV spread. Borrow-stress flags: htb at -0.05, severe at -0.15, unverified when quote-backing is missing.' },
+  { name: 'odds.get', kind: 'tRPC query', detail: 'Odds Lab: expected-move bands, event decomposition, strike ladder, Monte Carlo wall odds, seller edge score. Consumes cached signals.get + flow.get.' },
+  { name: 'breachRatio.get', kind: 'tRPC query', detail: 'Directional 30d expected-move breach ratios (upside / downside / overall vs 0.3173 theoretical). Retrospective mode at 90d; contemporaneous mode with dated IV at 126–252d. Quadrants: puts-favored, calls-favored, both-calm, both-jumpy.' },
+  { name: 'action.get / action.lab', kind: 'tRPC query', detail: 'Actionability read and lab variants over the signal payload.' },
+  { name: 'historical.get', kind: 'tRPC query', detail: 'Historical signal snapshots for prior-session comparisons.' },
+  { name: 'GET /v1/options/yield-screen', kind: 'REST', detail: 'Deterministic put/call screener: ranked contracts with delta, DTE, OI, volume, IV, simple annualized yield, cash required and warnings. Excludes sub-21-DTE, earnings-window and illiquid legs.' },
+  { name: 'GET /v1/options/yield', kind: 'REST', detail: 'Exact-leg pricing for one symbol/expiry/strike/side. Live prefers bid; last-print is indicative only.' },
+];
+
+export const agniCaveats = [
+  { title: 'Backtest edge stats are hardcoded', body: 'Identical boilerplate across tickers — never quote a p-value or hit rate from Agni. The VRP edgeNote contradicts its own quintile badge on most names.' },
+  { title: 'Five tickers run on proxy IV', body: 'MIRM, VKTX, HIMS, NVO, SOFI: ~248d realized-vol proxy with only a handful of real snapshots. Their IVR/IVP/VRP percentiles are indicative only; breachRatio falls back to retrospective mode for them.' },
+  { title: 'volRegime does not discriminate', body: 'Reads "stressed" on every name tested — ignore it as a signal.' },
+  { title: 'No history for positioning series', body: 'No historical GEX, skew or VRP series anywhere in the stack. Every Agni read is point-in-time context.' },
+  { title: 'What survives validation', body: 'GEX walls as trigger levels, netGex sign for sizing (not direction), chainContracts as the liquidity check (BBIO 52 / MIRM 40 = thin). Usage order: momentum, posture context, Agni positioning context, price trigger.' },
+];
+
+export const airavataFacts = {
+  repo: 'zonito/airavata',
+  base: 'http://127.0.0.1:3000 (tailnet 100.125.239.56:3000)',
+  protocols: 'tRPC only — no REST routes. Public procedures need no session; refresh/watchlist/digest mutations are protected.',
+  engine: 'The airavata.* procedures delegate to runEngine in server/airavata.ts, which spawns the Python engine. Full payload schema lives there.',
+  dataPlane: 'Reads Varuna through a typed server/varuna.ts client (X-Varuna-Source: AIRAVATA, loopback-only base URL guard) — never vendors directly.',
+  role: 'Smart-money regime context for the pipeline: posture plus its reliability receipt, consumed at 13:30 and 14:00 as advisory only — never a hard gate on its own.',
+};
+
+export const airavataRouters: EngineRouter[] = [
+  { name: 'airavata.posture', kind: 'tRPC query', detail: 'Smart-money posture for one symbol: NEW ENTRIES ALLOWED / REDUCE ONLY / CASH PRIORITY, with d25/d15/d5 drawdown counters, mom63, guidance, whyBlocked and the per-session history behind the verdict.' },
+  { name: 'airavata.postureBatch', kind: 'tRPC query', detail: 'Multi-symbol posture in one call (1–20 symbols, engine concurrency 5). Prefer this over hand-crafted HTTP batching — batch cardinality comes from the path, not the input keys.' },
+  { name: 'airavata.accuracy', kind: 'tRPC query', detail: 'Historical hit-rate and reliability stats per symbol: entry and exit tiers with sample sizes. This is the reliability data quoted alongside every posture read.' },
+  { name: 'airavata.evidence', kind: 'tRPC query', detail: 'The evidence the engine saw behind the current posture.' },
+  { name: 'airavata.state', kind: 'tRPC query', detail: 'Combined engine-state payload per symbol — what the dashboard single-ticker view is built from.' },
+  { name: 'airavata.strategy / .sim / .flipTrades', kind: 'tRPC query', detail: 'Leveraged-strategy backtest, portfolio simulation, and flip-trade backtest payloads for research and validation.' },
+  { name: 'refresh.* / watchlist.* / digest.*', kind: 'tRPC mutations', detail: 'Protected: force-refresh a symbol or list (60s cooldown), watchlist membership, digest reads.' },
+];
+
+export const airavataReliability = [
+  { title: 'Every posture carries a receipt', body: 'Tier (A/B/C), sample size n and probability from the weekly airavata_reliability.json snapshot. A posture quoted without tier, n and probability carries no weight.' },
+  { title: 'Weight scales with reliability', body: 'Tier A (or strong B with adequate n): strong sizing dial; CASH PRIORITY then demands exceptional edge and shrunk size. Tier C or thin n: noted, never moves size.' },
+  { title: 'The flip arrives late and whipsaws', body: 'Median 104 days after the 126d low, 102% of 63d gains pre-flip, 98% whipsaw within 63d. NEW ENTRIES ALLOWED is a take-profit/derisk marker, never an entry signal.' },
+  { title: 'Jev judges the boundary', body: 'The weighting shadow asks Jev full/half/ignore on the posture given tier, n and probability — snapshot numbers are ground truth, Jev judges only thin-reliability and noisy-context boundaries.' },
+];
+
+export const satelliteApps: { name: string; port: string; role: string; detail: string }[] = [
+  { name: 'Varuna', port: ':8400', role: 'Cache-first data plane', detail: 'FMP, Massive, Yahoo, CBOE, FINRA behind one envelope with TTLs and circuit breakers. Every engine reads through it; nothing touches vendors directly.' },
+  { name: 'Kubera', port: ':8000', role: 'Portfolio + wheel book', detail: 'Holdings, transactions, watchlists, the deterministic wheel-candidates API, momentum scores, correlation peers. The 13:30/14:00/14:30 jobs read here first.' },
+  { name: 'Drona', port: ':3008', role: 'Technicals', detail: 'premium-lab per ticker: support, resistance, trend, RSI14, Bollinger. No volume-profile fields.' },
+  { name: 'Vidhura', port: ':3009', role: 'Valuation + holders', detail: 'Valuation read plus institutional-holder data. Coverage is partial — missing never means low.' },
+  { name: 'Kamadhenu', port: ':3005', role: 'Commodities', detail: 'Commodity briefs and detail reads for the macro sleeve of the briefings.' },
+  { name: 'Rashi', port: ':3007', role: 'Forex', detail: '65 currencies: rates, convert, history. Quoted coverage, not 138.' },
+  { name: 'Bhisma', port: ':3010', role: 'Health only', detail: 'Programmatic reads go through its internal functions; treat its published hit rates with skepticism.' },
+];
