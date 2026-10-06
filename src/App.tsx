@@ -14,6 +14,9 @@ import Kubera from './pages/Kubera'
 import Varuna from './pages/Varuna'
 import Drona from './pages/Drona'
 import Vidhura from './pages/Vidhura'
+import Kamadhenu from './pages/Kamadhenu'
+import Rashi from './pages/Rashi'
+import Bhisma from './pages/Bhisma'
 
 // NOTE: ./components/Layout exports the Shell as default under the name App
 // (header + animated outlet). Routes are declared here.
@@ -36,6 +39,9 @@ export default function Root() {
           <Route path="varuna" element={<Varuna />} />
           <Route path="drona" element={<Drona />} />
           <Route path="vidhura" element={<Vidhura />} />
+          <Route path="kamadhenu" element={<Kamadhenu />} />
+          <Route path="rashi" element={<Rashi />} />
+          <Route path="bhisma" element={<Bhisma />} />
           <Route path="*" element={<Home />} />
         </Route>
       </Routes>

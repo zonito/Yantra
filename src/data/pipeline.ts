@@ -898,3 +898,51 @@ export const vidhuraCaveats = [
   { title: 'Coverage is partial', body: '93/454 tickers in the validation sample — missing never means low. Treat absence as unknown, not as a signal.' },
   { title: 'High short interest is orthogonal', body: 'High short % flags beaten-down names but is statistically independent of technicals (R² 0.031). Keep it as its own gauge, not a technical confirm.' },
 ];
+
+// ---------------------------------------------------------------------------
+// Briefings satellites — Kamadhenu, Rashi, Bhisma
+// ---------------------------------------------------------------------------
+
+export const kamadhenuFacts = {
+  repo: 'zonito/kamadhenu',
+  base: 'http://100.125.239.56:3005',
+  role: 'Commodities read for the macro sleeve of the briefings — oil, gold, copper and curated markets with macro context and related news. Not part of the wheel pipeline.',
+  gotcha: 'Commodity envelopes carry an error: null field alongside data, so naive "error" in response checks false-positive. Check ok / error.value, not key presence.',
+};
+
+export const kamadhenuRouters: EngineRouter[] = [
+  { name: 'GET /api/v1/commodities', kind: 'overview', detail: 'Curated commodity overview: quote, intraday change, ranges, and 90-day sparkline.' },
+  { name: 'GET /api/v1/commodities/brief', kind: 'tape', detail: 'Bounded market-tape projection for 1–4 curated markets: metadata, live quote timestamp, EOD 1W/1M changes, 52-week range position, 90-session realized volatility.' },
+  { name: 'GET /api/v1/commodities/{symbol}', kind: 'detail', detail: 'Quote, daily and intraday history, derived insights, category-peer and macro context, related news.' },
+];
+
+export const rashiFacts = {
+  repo: 'No endpoints doc found — documented from verified usage only',
+  base: 'http://100.125.239.56:3007',
+  role: 'Forex read for the briefings — rates, convert, history. Not part of the wheel pipeline.',
+  gotcha: 'Covers 65 currencies, not the quoted 138. Quote the real number.',
+};
+
+export const rashiRouters: EngineRouter[] = [
+  { name: 'GET /api/v1/health', kind: 'health', detail: 'Service status.' },
+  { name: 'GET /api/v1/currencies', kind: 'list', detail: 'The 65 covered currencies.' },
+  { name: 'GET /api/v1/rates', kind: 'rates', detail: 'Current FX rates.' },
+  { name: 'GET /api/v1/convert', kind: 'convert', detail: 'Convert between currencies.' },
+  { name: 'GET /api/v1/history', kind: 'history', detail: 'Historical rate series.' },
+];
+
+export const bhismaFacts = {
+  repo: 'zonito/bhisma',
+  base: 'http://100.125.239.56:3010',
+  role: 'Congressional-trading and whale-tracking surface: disclosed lawmaker trades, tracked managers, holdings, insider scores. Feeds the briefings — not part of the wheel pipeline.',
+  gotcha: 'Treat its published hit rates with skepticism — inflated by counting sells as wins.',
+};
+
+export const bhismaSurface: EngineRouter[] = [
+  { name: 'getSnapshot', kind: 'internal', detail: 'Full market snapshot: officials with disclosed trades (trade date, filed date, disclosure lag, amounts), tracked whale managers and holdings. Cached 30 minutes.' },
+  { name: 'getInstitutionProfile', kind: 'internal', detail: 'One whale/institution: holdings, sector mix, activity.' },
+  { name: 'getOfficialProfile', kind: 'internal', detail: 'One lawmaker: trades, top tickers, buy/sell counts.' },
+  { name: 'getExplorer', kind: 'internal', detail: 'Per-ticker view: congressional trades and whale holdings touching the symbol.' },
+  { name: 'getSectorDirectory', kind: 'internal', detail: 'Sectors ranked by disclosed USD, plus per-sector detail.' },
+  { name: 'getInsiderScores', kind: 'internal', detail: 'Insider score rankings.' },
+];
