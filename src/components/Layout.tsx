@@ -1,4 +1,4 @@
-import { Component, useEffect, type ReactNode } from 'react'
+import { Component, useEffect, useState, type ReactNode } from 'react'
 import { Link, NavLink, Outlet, useLocation } from 'react-router-dom'
 import { motion } from 'framer-motion'
 
@@ -10,16 +10,86 @@ const navItems = [
   { to: '/handoffs', label: 'Handoffs' },
   { to: '/gaps', label: 'Gaps' },
   { to: '/jev', label: 'Jev' },
+]
+
+const engineItems = [
   { to: '/agni', label: 'Agni' },
   { to: '/airavata', label: 'Airavata' },
   { to: '/kubera', label: 'Kubera' },
   { to: '/varuna', label: 'Varuna' },
   { to: '/drona', label: 'Drona' },
   { to: '/vidhura', label: 'Vidhura' },
+]
+
+const satelliteItems = [
   { to: '/kamadhenu', label: 'Kamadhenu' },
   { to: '/rashi', label: 'Rashi' },
   { to: '/bhisma', label: 'Bhisma' },
 ]
+
+function NavDropdown({ label, items }: { label: string; items: { to: string; label: string }[] }) {
+  const [open, setOpen] = useState(false)
+  const location = useLocation()
+  useEffect(() => setOpen(false), [location.pathname])
+  const active = items.some((i) => location.pathname === i.to)
+  return (
+    <div
+      className="relative"
+      onPointerEnter={(e) => {
+        if (e.pointerType === 'mouse') setOpen(true)
+      }}
+      onPointerLeave={(e) => {
+        if (e.pointerType === 'mouse') setOpen(false)
+      }}
+    >
+      <button
+        type="button"
+        aria-expanded={open}
+        onClick={() => setOpen((v) => !v)}
+        onKeyDown={(e) => {
+          if (e.key === 'Escape') setOpen(false)
+        }}
+        className={`flex items-center gap-1 rounded-full px-3 py-1.5 text-xs font-medium transition-colors ${
+          active
+            ? 'bg-amber-300/10 text-amber-200'
+            : 'text-zinc-400 hover:bg-zinc-800/60 hover:text-zinc-200'
+        }`}
+      >
+        {label}
+        <svg
+          width="10"
+          height="10"
+          viewBox="0 0 10 10"
+          fill="none"
+          className={`transition-transform ${open ? 'rotate-180' : ''}`}
+        >
+          <path d="M2 3.5L5 6.5L8 3.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+        </svg>
+      </button>
+      {open && (
+        <div className="absolute right-0 top-full z-50 pt-1.5">
+          <div className="w-40 rounded-xl border border-zinc-800 bg-[#101014] p-1.5 shadow-xl shadow-black/40">
+            {items.map((n) => (
+              <NavLink
+                key={n.to}
+                to={n.to}
+                className={({ isActive }) =>
+                  `block rounded-lg px-3 py-2 text-xs font-medium transition-colors ${
+                    isActive
+                      ? 'bg-amber-300/10 text-amber-200'
+                      : 'text-zinc-400 hover:bg-zinc-800/60 hover:text-zinc-200'
+                  }`
+                }
+              >
+                {n.label}
+              </NavLink>
+            ))}
+          </div>
+        </div>
+      )}
+    </div>
+  )
+}
 
 function ScrollToTop() {
   const { pathname } = useLocation()
@@ -107,6 +177,8 @@ function Shell() {
                 {n.label}
               </NavLink>
             ))}
+            <NavDropdown label="Engines" items={engineItems} />
+            <NavDropdown label="Satellites" items={satelliteItems} />
           </nav>
         </div>
       </header>
