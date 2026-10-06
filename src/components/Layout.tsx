@@ -160,7 +160,7 @@ function Shell() {
               Kubera wheel pipeline
             </span>
           </Link>
-          <nav className="flex items-center gap-1 overflow-x-auto">
+          <nav className="flex flex-wrap items-center justify-end gap-1">
             {navItems.map((n) => (
               <NavLink
                 key={n.to}
