@@ -8,6 +8,7 @@ import Quality from './pages/Quality'
 import Handoffs from './pages/Handoffs'
 import Gaps from './pages/Gaps'
 import Jev from './pages/Jev'
+import Hedge from './pages/Hedge'
 import Agni from './pages/Agni'
 import Airavata from './pages/Airavata'
 import Kubera from './pages/Kubera'
@@ -33,6 +34,7 @@ export default function Root() {
           <Route path="handoffs" element={<Handoffs />} />
           <Route path="gaps" element={<Gaps />} />
           <Route path="jev" element={<Jev />} />
+          <Route path="hedge" element={<Hedge />} />
           <Route path="agni" element={<Agni />} />
           <Route path="airavata" element={<Airavata />} />
           <Route path="kubera" element={<Kubera />} />
