@@ -314,6 +314,31 @@ export const phases: Phase[] = [
         ],
       },
       {
+        id: 'hedge',
+        time: 'Continuous',
+        title: 'Compounder hedge',
+        tagline: 'Collar the high-stack names before the drop',
+        summary:
+          'Single-name collars on equity positions above $75K. Two triggers, both buy protection before the drop: a daily close within 5% below resistance with a bullish trend, or a financial/geopolitical fear spike while the position is still whole. Never index, never after the selloff.',
+        accent: '#22d3ee',
+        link: '/hedge',
+        linkLabel: 'Open the hedge doctrine',
+        inputs: [
+          { label: 'Position state files', detail: '## Hedge plan per compounder: resistance, support, hedge zone and notional band. The morning loop reads them and flags candidates.' },
+          { label: 'Drona levels', detail: 'Support and resistance per name; the 5% band below resistance is the technical trigger zone.' },
+          { label: 'Fear read', detail: 'VIX spikes, macro shocks, sector-wide de-risking — the event trigger, independent of price.' },
+        ],
+        subcomponents: [
+          { name: 'High-stack bar', detail: 'Positions above $75K only (9 Oct 2026: MU, MRVL, NBIS, IREN, TEM, INTC). RKLB at $63K does not clear it.' },
+          { name: 'Put spread, 2–3 months', detail: 'Long leg at/near support, 30–50% of position notional. Spread caps the cost; outright puts are not bought.' },
+          { name: 'Call-funded collar', detail: 'Where a covered-call ladder exists (MU, MRVL, INTC), the collected call premium funds the put leg.' },
+          { name: 'Liquidity filter', detail: 'Thin-option names stay unhedged regardless of size.' },
+        ],
+        outputs: [
+          { label: 'Collared compounders', detail: 'Downside protection on the 20% growth engine, bought when puts are cheap.', to: 'outcomes' },
+        ],
+      },
+      {
         id: 'outcomes',
         time: 'Continuous',
         title: 'Outcome tracking',
@@ -348,6 +373,7 @@ export const nodeOrder = [
   'recommend',
   'finalize',
   'execute',
+  'hedge',
   'outcomes',
 ];
 
@@ -487,6 +513,40 @@ export const reserveBands = [
   { band: '1.50\u20131.75\u00d7', label: 'Stretch zone', note: 'New puts allowed, every recommendation flagged.' },
   { band: '> 1.75\u00d7', label: 'Red zone', note: 'Pause new put sales until back below 1.75\u00d7.' },
 ];
+
+// ---------------------------------------------------------------------------
+// Compounder hedge doctrine (set 2026-10-09)
+// ---------------------------------------------------------------------------
+
+export const hedgeDoctrine = {
+  bar: 'Equity positions above $75K get collar treatment. Hedge only what is owned \u2014 never index (no QQQ/SPY).',
+  triggers: [
+    {
+      title: 'Technical: resistance touch',
+      body: 'Daily close within 5% below resistance with a bullish trend. Puts are cheapest when the stock is strong and complacency is highest \u2014 the "good times" entry.',
+    },
+    {
+      title: 'Event: fear spike',
+      body: 'Financial or geopolitical fear spike (VIX spike, macro shock, sector-wide de-risking) while the position is still whole. The trigger is the fear itself \u2014 never buy the hedge after the drop.',
+    },
+  ],
+  structure: [
+    { title: 'Put spread, 2-3 months', body: 'Long leg at/near support. Spread caps the cost; outright puts are not bought.' },
+    { title: '30-50% of position notional', body: 'Protect the compounder, never neutralize it.' },
+    { title: 'Call-funded collar', body: 'Where a covered-call ladder exists, collected call premium funds the put leg \u2014 the cheapest hedge is the one the wheel already paid for.' },
+    { title: 'Liquidity filter', body: 'Thin-option names stay unhedged regardless of size.' },
+  ],
+  /** roster as of 2026-10-09; levels move with Drona, the bar does not */
+  roster: [
+    { ticker: 'MU', value: '$707K', resistance: '$1,108.72', hedgeZone: '$1,053+', support: '$1,022.90', status: 'Watch \u2014 7% below zone, bullish' },
+    { ticker: 'MRVL', value: '$565K', resistance: '$301.27', hedgeZone: '$286+', support: '$213.63', status: 'Watch \u2014 10% below zone, bullish' },
+    { ticker: 'NBIS', value: '$405K', resistance: '$255.10', hedgeZone: '$242+', support: '$203.87', status: 'Standby \u2014 16% below zone, neutral' },
+    { ticker: 'IREN', value: '$204K', resistance: '$49.37', hedgeZone: '$46.90+', support: '$35.24', status: 'No hedge \u2014 bearish, 38% below zone' },
+    { ticker: 'TEM', value: '$81K', resistance: '$89.09', hedgeZone: '$84.60+', support: '$57.72', status: 'Watch \u2014 bullish' },
+    { ticker: 'INTC', value: '$78K', resistance: '$127.44', hedgeZone: '$121+', support: '$94.52', status: 'Watch \u2014 bullish' },
+  ],
+  mechanism: 'Triggers live in each position state file (## Hedge plan). The morning report loop reads them and flags candidates \u2014 no per-stock watch jobs.',
+};
 
 // ---------------------------------------------------------------------------
 // Quality model
