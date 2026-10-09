@@ -10,6 +10,7 @@ const navItems = [
   { to: '/handoffs', label: 'Handoffs' },
   { to: '/gaps', label: 'Gaps' },
   { to: '/jev', label: 'Jev' },
+  { to: '/hedge', label: 'Hedge' },
 ]
 
 const engineItems = [
