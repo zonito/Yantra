@@ -8,6 +8,5 @@ export default defineConfig({
   plugins: [react(), tailwindcss()],
   server: {
     port: 3014,
-    strictPort: true, // Fail loudly on collision instead of silently hopping ports
   },
 })

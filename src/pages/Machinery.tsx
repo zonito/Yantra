@@ -59,13 +59,13 @@ export default function Machinery() {
       </div>
 
       <h2 className="mt-12 text-xs font-semibold uppercase tracking-[0.18em] text-zinc-500">
-        Proposed rebalance · 4 Oct 2026 · pending implementation
+        Rebalance · 4 Oct 2026 · live in Kubera
       </h2>
       <p className="mt-2 max-w-2xl text-xs leading-relaxed text-zinc-500">
         The composite’s job is own-worthiness — what is safe to own if assigned. Timing belongs
-        to the 13:30 dimmer, pricing to the 14:00 gates. Valuation is cut because DCF has almost
+        to the 13:30 dimmer, pricing to the 14:00 gates. Valuation was cut because DCF has almost
         no predictive power over a 30–45 day put and double-counts Fundamental; the freed weight
-        goes to tails (Quantitative), premium richness (Options) and the freshest read (Technical).
+        went to tails (Quantitative), premium richness (Options) and the freshest read (Technical).
       </p>
       <div className="mt-4 overflow-x-auto rounded-2xl border border-zinc-800">
         <table className="w-full min-w-[560px] text-left text-xs">
