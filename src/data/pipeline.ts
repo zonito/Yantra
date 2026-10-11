@@ -186,10 +186,10 @@ export const phases: Phase[] = [
       {
         id: 'dimmer',
         time: '13:30',
-        title: 'Momentum dimmer',
+        title: 'Chalani — momentum dimmer',
         tagline: 'A verdict for every name in the universe',
         summary:
-          'Reads the deterministic candidate API, assigns Full / Half / Skip to the complete 14:00 universe, and runs the sleeve and regime-governor logic. The dimmer is a ceiling for new puts, never a gate on existing positions.',
+          'Reads the deterministic candidate API, assigns Full / Half / Skip to the complete Yojana universe, and runs the sleeve and regime-governor logic. The dimmer is a ceiling for new puts, never a gate on existing positions.',
         accent: '#fbbf24',
         inputs: [
           { label: 'Ranked candidates', detail: 'The deterministic wheel-candidates API snapshot.' },
@@ -210,7 +210,7 @@ export const phases: Phase[] = [
       {
         id: 'recommend',
         time: '14:00',
-        title: 'Recommendations',
+        title: 'Yojana — recommendations',
         tagline: 'Three strong ideas — or fewer',
         summary:
           'Handles positions first, targets rolls at 28–21 DTE, and uses the deterministic candidate API only as supplemental discovery. Candidates clear hard gates, then pass six context inputs before ≤3 ideas are staged to Google Tasks.',
@@ -237,6 +237,7 @@ export const phases: Phase[] = [
         outputs: [
           { label: 'Staged trade setups', detail: 'Ranked candidates with every gate recorded, waiting for final pricing.', to: 'finalize' },
           { label: 'Jev observation set', detail: 'Each ranked new-put candidate is handed to the Jev shadow after the briefing is composed.', to: 'jev' },
+          { label: 'Entry-context records', detail: 'Every ranked candidate (ticker, strike, side, expiry, delta, DTE, IVR) POSTed to the Wheel Ledger for fill-to-recommendation joins.', to: 'ledger' },
         ],
       },
       {
@@ -245,7 +246,7 @@ export const phases: Phase[] = [
         title: 'Jev shadow',
         tagline: 'Watches, logs, never touches the trade',
         summary:
-          'An observer branch off 14:00. After the briefing is composed, each ranked new-put candidate gets two Jev judgments. Fail-open and invisible in the briefing — it cannot alter gates, sizing, the IV queue or execution.',
+          'An observer branch off Yojana. After the briefing is composed, each ranked new-put candidate gets two Jev judgments. Fail-open and invisible in the briefing — it cannot alter gates, sizing, the IV queue or execution.',
         accent: '#f472b6',
         observer: true,
         link: '/jev',
@@ -265,13 +266,13 @@ export const phases: Phase[] = [
       {
         id: 'finalize',
         time: '14:30',
-        title: 'Finalize-only',
+        title: 'Nischaya — finalize-only',
         tagline: 'Reprice and validate — no new discovery',
         summary:
           'Reads contract bid/ask/last by strike and expiry from Varuna/Massive chain snapshots, then validates liquidity, cluster, lead-lag, beta and earnings dates. Finalizes executable limits only while live quotes are available.',
         accent: '#fb923c',
         inputs: [
-          { label: 'Staged candidates', detail: 'The ≤3 setups from 14:00.' },
+          { label: 'Staged candidates', detail: 'The ≤3 setups from Yojana.' },
           { label: 'Chain snapshots', detail: 'Varuna/Massive bid/ask/last by strike and expiry.' },
           { label: 'Peer earnings dates', detail: 'Next-earnings check from the correlation peer feed.' },
         ],
@@ -358,6 +359,29 @@ export const phases: Phase[] = [
           { label: 'Resolved-trade evidence', detail: 'Performance truth for the next iteration. Known gap: it does not yet feed back into discovery, scores, or gates.' },
         ],
       },
+      {
+        id: 'ledger',
+        time: 'Continuous',
+        title: 'Wheel Ledger',
+        tagline: 'Trade P&L intelligence from IBKR fills',
+        summary:
+          'Reconstructs every option fill into legs, round trips, roll chains and assignment episodes, then measures what actually earns: win rate by bucket, dollars-per-day by entry DTE, roll-vs-assignment outcomes, and the 60% take-profit rule against alternatives. Entry context (delta, DTE, IVR) joins each fill to the Yojana recommendation that produced it.',
+        accent: '#a3e635',
+        inputs: [
+          { label: 'IBKR transaction exports', detail: 'Both accounts, month-to-date CSVs — legs stored with commission-negative handling, idempotent re-ingest.' },
+          { label: 'Yojana entry-context records', detail: 'Every ranked candidate POSTed after the 14:00 run: ticker, strike, side, expiry, delta, DTE, IVR.' },
+          { label: 'Agni IV history', detail: 'IVR at entry for fills predating record persistence.' },
+        ],
+        subcomponents: [
+          { name: 'Round-trip engine', detail: 'OCC-symbol grouping per account: closed / expired / open / assigned / partial. Rolls link into 3-day chains — never mislabeled as losses.' },
+          { name: 'Entry-context join', detail: 'Latest recommendation on or before first sell wins; account must match when the record carries one. No match leaves delta/IVR null, never guessed.' },
+          { name: 'Four analyses', detail: 'Win rate by bucket; fast-vs-slow $/day; roll-vs-assignment; 60% rule check. Report, never prescribe.' },
+          { name: 'Nine API endpoints', detail: '/api/v1/wheel/ledger: ingest, ingest-upload, round-trips, stats, efficiency, rolls, take-profit, entry-context POST and GET.' },
+        ],
+        outputs: [
+          { label: 'Measured edge', detail: 'Seed finding (Aug–Oct 2026): entry DTE ≤21d earns ~$146/day vs $78/day at 50d+ — a DTE selection filter feeding back into Yojana.' },
+        ],
+      },
     ],
   },
 ];
@@ -375,6 +399,7 @@ export const nodeOrder = [
   'execute',
   'hedge',
   'outcomes',
+  'ledger',
 ];
 
 export const observerNodeId = 'jev';
