@@ -189,22 +189,28 @@ export const phases: Phase[] = [
         title: 'Chalani — momentum dimmer',
         tagline: 'A verdict for every name in the universe',
         summary:
-          'Reads the deterministic candidate API, assigns Full / Half / Skip to the complete Yojana universe, and runs the sleeve and regime-governor logic. The dimmer is a ceiling for new puts, never a gate on existing positions.',
+          'Reads the deterministic candidate API, assigns Full / Half / Skip to the complete Yojana universe, and runs the sleeve and regime-governor logic. A Section 1B scan then applies the ratified position-lifecycle and spread rules to every open short put and call in both IBKR accounts, writing per-position verdicts to position-actions.json. The dimmer verdicts remain a ceiling for new puts, never a gate on existing positions.',
         accent: '#fbbf24',
         inputs: [
           { label: 'Ranked candidates', detail: 'The deterministic wheel-candidates API snapshot.' },
           { label: 'Bottom-scoop flags', detail: "Sunday night's positioning read sharpens the one-line why." },
           { label: 'Sleeve state', detail: 'Monthly momentum sleeve: 5–8 names, 15% trailing stops, dual-flip exits.' },
           { label: 'Regime governor', detail: 'Breadth vs 40%: halve put sales below it. 1.0x / 0.5x multiplier plus a tail hedge from ~10% of monthly premium.' },
+          { label: 'Open short puts + calls (both accounts)', detail: 'Every open short put and short call in Zonito and Nikhila IBKR — the full position book, scanned position by position for its next action.' },
         ],
         subcomponents: [
           { name: 'Full / Half / Skip verdicts', detail: 'Bullish = full size, neutral = half, bearish = skip. A composite-agent SELL can only downgrade Full to Skip.' },
           { name: 'dimmer-verdicts.json', detail: 'The written verdict file the 14:00 pass reads first.' },
           { name: 'Sleeve logic', detail: 'Dual-flip exits and 15% trailing stops manage the monthly momentum sleeve.' },
           { name: 'Regime governor', detail: 'Market-breadth governor on new risk: below 40% dual-bullish, put sales halve.' },
+          { name: 'Section 1B lifecycle scan', detail: 'Per-position next-action verdicts across the whole open book: HOLD, TAKE PROFIT, ROLL, CLOSE, CAP, CAP CALL, URGENT.' },
+          { name: 'Lifecycle rules', detail: '60% GTC take-profit buyback at 40% of credit; at 21 DTE, roll for net credit only when pressure is sector-wide, the name is still wanted and a catalyst remains; close is the default — holding argues for itself.' },
+          { name: 'Spread rule (ratified 13 Oct 2026)', detail: 'Cap a naked short when two of three triggers fire: short delta ≥ 0.45–0.50 or spot within 5% of the strike; account cushion under 25%; a binary event inside the remaining life while in the money. Already-spread positions are never re-capped.' },
+          { name: 'position-actions.json', detail: 'The written per-position verdict file the 14:00 pass reads first.' },
         ],
         outputs: [
           { label: 'Dimmer verdicts', detail: 'Full / Half / Skip per name — the ceiling the 14:00 pass builds under.', to: 'recommend' },
+          { label: 'Position-action verdicts', detail: 'HOLD / TAKE PROFIT / ROLL / CLOSE / CAP / CAP CALL / URGENT per open position — priced and staged by the 14:00 pass.', to: 'recommend' },
         ],
       },
       {
@@ -213,7 +219,7 @@ export const phases: Phase[] = [
         title: 'Yojana — recommendations',
         tagline: 'Three strong ideas — or fewer',
         summary:
-          'Handles positions first, targets rolls at 28–21 DTE, and uses the deterministic candidate API only as supplemental discovery. Candidates clear hard gates, then pass six context inputs before ≤3 ideas are staged to Google Tasks.',
+          'Handles positions first, targets rolls at 28–21 DTE, and uses the deterministic candidate API only as supplemental discovery. Candidates clear hard gates, then pass six context inputs before ≤3 ideas are staged to Google Tasks. Chalani’s position-action verdicts are priced and staged into Pending Trades and the iv-refresh queue action column under the same lifecycle and spread rules.',
         accent: '#34d399',
         link: '/airavata',
         linkLabel: 'Open the Airavata engine',
@@ -225,6 +231,7 @@ export const phases: Phase[] = [
           { label: 'Macro calendar', detail: 'Fresh 45-day Tier-1 calendar (FOMC, CPI, PCE, NFP, OPEX). Thin IVR + Tier-1 event in-window = kill.' },
           { label: 'Airavata posture', detail: 'Reliability-weighted only: tier + n + probability, or it carries no weight. Advisory, never a hard gate.' },
           { label: 'Agni positioning', detail: 'Walls as trigger levels, gamma regime for sizing — never an entry trigger.' },
+          { label: 'Position actions', detail: 'position-actions.json from 13:30 — a HOLD / TAKE PROFIT / ROLL / CLOSE / CAP / CAP CALL / URGENT verdict for every open short put and call.' },
         ],
         subcomponents: [
           { name: 'Book-first discovery', detail: 'Existing book (rolls, take-profit redeploys, covered-strangle legs) → Shortlist → holdings → theme lists → screens.' },
@@ -233,9 +240,11 @@ export const phases: Phase[] = [
           { name: 'Six context inputs', detail: 'The delta-context block: momentum, posture, positioning, correlation cluster, event flags, reserve headroom.' },
           { name: 'Macro event gate', detail: 'Tier-1 macro inside the DTE window demotes a rung or kills; Tier-2 names a caveat with trimmed size.' },
           { name: 'Staging', detail: 'Three strong ideas or fewer → Google Tasks “Pending Trades” as TICKER strike EXPIRY xN (account). Zero is a valid output.' },
+          { name: 'Action staging', detail: 'Each position-action verdict is priced and staged into Pending Trades and the iv-refresh queue, which now carries an action column. Rolls stage only when they net a credit; caps stage only after the 40% price check — wing at or under 40% of the current value of the short leg — and the 10%-of-MTD-realized-premium budget check.' },
         ],
         outputs: [
           { label: 'Staged trade setups', detail: 'Ranked candidates with every gate recorded, waiting for final pricing.', to: 'finalize' },
+          { label: 'Staged position actions', detail: 'ROLL / CLOSE / CAP / CAP CALL rows with limits, staged alongside the candidates for the 14:30 open check.', to: 'finalize' },
           { label: 'Jev observation set', detail: 'Each ranked new-put candidate is handed to the Jev shadow after the briefing is composed.', to: 'jev' },
           { label: 'Entry-context records', detail: 'Every ranked candidate (ticker, strike, side, expiry, delta, DTE, IVR) POSTed to the Wheel Ledger for fill-to-recommendation joins.', to: 'ledger' },
         ],
@@ -269,21 +278,23 @@ export const phases: Phase[] = [
         title: 'Nischaya — finalize-only',
         tagline: 'Reprice and validate — no new discovery',
         summary:
-          'Reads contract bid/ask/last by strike and expiry from Varuna/Massive chain snapshots, then validates liquidity, cluster, lead-lag, beta and earnings dates. Finalizes executable limits only while live quotes are available.',
+          'Reads contract bid/ask/last by strike and expiry from Varuna/Massive chain snapshots, then validates liquidity, cluster, lead-lag, beta and earnings dates. Finalizes executable limits only while live quotes are available. Staged position actions are finalized at the open under the same live-quote discipline.',
         accent: '#fb923c',
         inputs: [
           { label: 'Staged candidates', detail: 'The ≤3 setups from Yojana.' },
+          { label: 'Staged position actions', detail: 'The 14:00 action rows — ROLL / CLOSE / CAP / CAP CALL — awaiting re-verification against live quotes.' },
           { label: 'Chain snapshots', detail: 'Varuna/Massive bid/ask/last by strike and expiry.' },
           { label: 'Peer earnings dates', detail: 'Next-earnings check from the correlation peer feed.' },
         ],
         subcomponents: [
           { name: 'Quote verification', detail: 'Live bid/ask/last per contract. One retry after 5 minutes on null quotes, then finalize off live last prints as success-with-caveats.' },
+          { name: 'Action finalization', detail: 'Rolls are re-verified to still net a credit on live mids, or stood down. Caps are re-checked — 40% price check passed and cap triggers not cleared — or stood down. Closes are finalized against the live mid.' },
           { name: 'Liquidity + cluster checks', detail: 'Option liquidity gate; one candidate per correlation cluster, preferring the laggard of a diverged pair.' },
           { name: 'Lead-lag + beta validation', detail: 'Beta-aware strike widths; no pairs logic in bear regimes.' },
           { name: 'Executable limit pricer', detail: 'Limit orders only, per-account reserve math, explicit Zonito-or-Nikhila label.' },
         ],
         outputs: [
-          { label: 'Final limits', detail: 'Executable limits patched into the Pending Trades task notes. Dead candidates completed with reason.', to: 'execute' },
+          { label: 'Final limits', detail: 'Executable limits patched into the Pending Trades task notes, action rows included. Dead candidates and stood-down actions completed with reason.', to: 'execute' },
         ],
       },
     ],
@@ -521,6 +532,9 @@ export const rules1400: Rule[] = [
   { title: 'Stage a patient opening limit', body: 'Live hours: 10% richer than the executable premium reference. Keep source quote + timestamp in notes.' },
   { title: 'Do not turn closed-market prints into orders', body: 'Last-print yield outside hours is indicative only. Leave pending until live bid/ask arrives.' },
   { title: 'Keep the 60% GTC take-profit plan', body: 'Every new short option carries a buyback at 40% of opening credit. The 50% proposal was rejected.' },
+  { title: 'Stage the position-action verdicts', body: 'Chalani Section 1B verdicts (HOLD / TAKE PROFIT / ROLL / CLOSE / CAP / CAP CALL / URGENT) are priced and staged into Pending Trades and the iv-refresh queue, which carries an action column.' },
+  { title: 'Stage rolls only for net credit', body: 'A ROLL verdict stages only when the roll nets a credit. A roll that cannot pay for itself is not staged.' },
+  { title: 'Caps pass the price and budget checks', body: 'A CAP verdict stages only after the 40% price check \u2014 wing at or under 40% of the current value of the short leg \u2014 and the 10%-of-MTD-realized-premium tail-hedge budget check. Already-spread positions are never re-capped.' },
   { title: 'Stage \u2014 never execute', body: 'Limit orders only. The jobs never place trades and never propose a market order.' },
 ];
 
@@ -531,6 +545,7 @@ export const rules1430: Rule[] = [
   { title: 'Market closed means pending', body: 'Last prints stay indicative. Preserve the task and record the reason \u2014 never claim a finalized limit.' },
   { title: 'A completed fallback is not a failure', body: 'Report success-with-caveats when all available work is done.' },
   { title: 'Resolve visibly', body: 'Invalidated candidates close in Pending Trades with the reason; task state and chat outcome must agree.' },
+  { title: 'Re-verify staged actions at the open', body: 'ROLL rows must still net a credit on live mids, or stand down. CAP rows must still pass the 40% price check with cap triggers not cleared, or stand down. CLOSE rows finalize against the live mid.' },
 ];
 
 export const reserveBands = [
@@ -694,6 +709,16 @@ export const handoffs: Handoff[] = [
     riskKind: 'control',
   },
   {
+    id: 'position-actions',
+    title: 'Position-action verdicts',
+    producer: 'Chalani Section 1B lifecycle scan at 13:30',
+    artifact: 'position-actions.json \u2014 HOLD / TAKE PROFIT / ROLL / CLOSE / CAP / CAP CALL / URGENT per open short put and short call in both IBKR accounts',
+    consumer: '14:00 Yojana pricing and staging',
+    contract: 'The ratified lifecycle rules (60% GTC take-profit, 21-DTE roll-for-net-credit conditions, close as default) and the two-of-three spread triggers are applied before the file is written. Already-spread positions are never re-capped.',
+    risk: 'STALE OR MISSING ACTION VERDICTS MUST FAIL VISIBLY',
+    riskKind: 'risk',
+  },
+  {
     id: 'flow',
     title: 'Agni options-flow advisory',
     producer: 'Agni flow.get, once per 14:00 candidate (URL-encoded)',
@@ -719,7 +744,7 @@ export const handoffs: Handoff[] = [
     producer: '14:00 recommendation pass',
     artifact: 'iv-refresh-queue.md + Google Tasks Pending Trades (Notion disabled)',
     consumer: '14:30 finalize and pairs validator',
-    contract: 'All six delta-context lines land in both the queue and task notes. Task title: TICKER strike EXPIRY xN (account).',
+    contract: 'All six delta-context lines land in both the queue and task notes. The queue carries an action column (HOLD / TAKE PROFIT / ROLL / CLOSE / CAP / CAP CALL / URGENT). Task title: TICKER strike EXPIRY xN (account).',
     risk: 'QUEUE AND TASK STATE MUST STAY CONSISTENT',
     riskKind: 'risk',
   },
