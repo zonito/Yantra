@@ -206,6 +206,7 @@ export const phases: Phase[] = [
           { name: 'Section 1B lifecycle scan', detail: 'Per-position next-action verdicts across the whole open book: HOLD, TAKE PROFIT, ROLL, CLOSE, CAP, CAP CALL, URGENT.' },
           { name: 'Lifecycle rules', detail: '60% GTC take-profit buyback at 40% of credit; at 21 DTE, roll for net credit only when pressure is sector-wide, the name is still wanted and a catalyst remains; close is the default — holding argues for itself.' },
           { name: 'Spread rule (ratified 13 Oct 2026)', detail: 'Cap a naked short when two of three triggers fire: short delta ≥ 0.45–0.50 or spot within 5% of the strike; account cushion under 25%; a binary event inside the remaining life while in the money. Already-spread positions are never re-capped.' },
+          { name: 'Cushion source rule (patched 14 Oct 2026)', detail: 'The cushion trigger reads broker ground truth, never the modelled margin_insights estimate: on 13 Oct 2026 the model showed Nikhila a 67.6% cushion when IBKR showed 5.15%. Until a broker-sourced margin feed exists, the cushion trigger defaults to FIRED for both IBKR accounts; a modelled cushion never clears it and never counts as a recovery. Broker Funds screenshots supersede the default with the actual reading.' },
           { name: 'position-actions.json', detail: 'The written per-position verdict file the 14:00 pass reads first.' },
         ],
         outputs: [
