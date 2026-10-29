@@ -5,6 +5,7 @@ import { motion } from 'framer-motion'
 const navItems = [
   { to: '/', label: 'Flow', end: true },
   { to: '/machinery', label: 'Machinery' },
+  { to: '/setu', label: 'Setu' },
   { to: '/rules', label: 'Rules' },
   { to: '/quality', label: 'Quality' },
   { to: '/handoffs', label: 'Handoffs' },

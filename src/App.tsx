@@ -3,6 +3,7 @@ import App from './components/Layout'
 import Home from './pages/Home'
 import StagePage from './pages/StagePage'
 import Machinery from './pages/Machinery'
+import Setu from './pages/Setu'
 import Rules from './pages/Rules'
 import Quality from './pages/Quality'
 import Handoffs from './pages/Handoffs'
@@ -29,6 +30,7 @@ export default function Root() {
           <Route index element={<Home />} />
           <Route path="stage/:id" element={<StagePage />} />
           <Route path="machinery" element={<Machinery />} />
+          <Route path="setu" element={<Setu />} />
           <Route path="rules" element={<Rules />} />
           <Route path="quality" element={<Quality />} />
           <Route path="handoffs" element={<Handoffs />} />
