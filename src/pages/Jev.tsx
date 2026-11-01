@@ -21,9 +21,9 @@ export default function Jev() {
         The observer that never touches the trade
       </h1>
       <p className="mt-3 max-w-2xl text-sm leading-relaxed text-zinc-400">
-        After the 14:00 briefing is composed, every ranked new-put candidate is sent to the
-        TypeSafe Jev decision model for two observational judgments. The run is fail-open;
-        nothing flows back.
+        After the 14:00 briefing is composed, every ranked new-put candidate is sent to the TypeSafe
+        Jev decision model for two observational judgments. The run is fail-open; nothing flows
+        back.
       </p>
 
       <div className="mt-8 grid gap-3 sm:grid-cols-2">
@@ -33,7 +33,9 @@ export default function Jev() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.35 }}
         >
-          <p className="text-[10px] font-semibold uppercase tracking-[0.16em] text-zinc-500">Question 1</p>
+          <p className="text-[10px] font-semibold uppercase tracking-[0.16em] text-zinc-500">
+            Question 1
+          </p>
           <h3 className="mt-2 text-lg font-semibold text-zinc-100">Position size</h3>
           <p className="mt-2 font-mono text-sm text-pink-200">full / half / skip</p>
           <p className="mt-2 text-xs leading-relaxed text-zinc-500">
@@ -46,7 +48,9 @@ export default function Jev() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.08, duration: 0.35 }}
         >
-          <p className="text-[10px] font-semibold uppercase tracking-[0.16em] text-zinc-500">Question 2</p>
+          <p className="text-[10px] font-semibold uppercase tracking-[0.16em] text-zinc-500">
+            Question 2
+          </p>
           <h3 className="mt-2 text-lg font-semibold text-zinc-100">Airavata weight</h3>
           <p className="mt-2 font-mono text-sm text-pink-200">full / half / ignore</p>
           <p className="mt-2 text-xs leading-relaxed text-zinc-500">
@@ -65,7 +69,9 @@ export default function Jev() {
             key={k}
             className={`grid gap-1 px-5 py-4 sm:grid-cols-[160px_1fr] sm:gap-4 ${i % 2 ? 'bg-zinc-900/30' : ''}`}
           >
-            <p className="text-[11px] font-semibold uppercase tracking-[0.14em] text-zinc-500">{k}</p>
+            <p className="text-[11px] font-semibold uppercase tracking-[0.14em] text-zinc-500">
+              {k}
+            </p>
             <p className="text-xs leading-relaxed text-zinc-300">{v}</p>
           </div>
         ))}
@@ -76,22 +82,24 @@ export default function Jev() {
       </h2>
       <div className="mt-4 rounded-2xl border border-zinc-800 bg-zinc-900/50 p-6">
         <p className="text-sm text-zinc-300">
-          First review after <span className="font-semibold text-zinc-100">4 weeks or 30 scored candidates</span>,
+          First review after{' '}
+          <span className="font-semibold text-zinc-100">4 weeks or 30 scored candidates</span>,
           whichever comes first — expected early November 2026, reported unprompted.
         </p>
         <ul className="mt-4 space-y-3">
           <li className="text-xs leading-relaxed text-zinc-400">
-            <span className="font-semibold text-zinc-200">Sizing shadow:</span> Jev’s Full bucket must
-            beat Skip on forward 21-trading-day returns with non-overlapping 95% confidence intervals,
-            and agreement with the pipeline verdict must exceed 60%.
+            <span className="font-semibold text-zinc-200">Sizing shadow:</span> Jev’s Full bucket
+            must beat Skip on forward 21-trading-day returns with non-overlapping 95% confidence
+            intervals, and agreement with the pipeline verdict must exceed 60%.
           </li>
           <li className="text-xs leading-relaxed text-zinc-400">
-            <span className="font-semibold text-zinc-200">Weighting shadow:</span> postures given full
-            weight must predict the next 21-trading-day direction more accurately than ignored postures,
-            with non-overlapping 95% confidence intervals.
+            <span className="font-semibold text-zinc-200">Weighting shadow:</span> postures given
+            full weight must predict the next 21-trading-day direction more accurately than ignored
+            postures, with non-overlapping 95% confidence intervals.
           </li>
           <li className="text-xs leading-relaxed text-zinc-400">
-            <span className="font-semibold text-zinc-200">Ditch rule:</span> any shadow failing its bar is removed.
+            <span className="font-semibold text-zinc-200">Ditch rule:</span> any shadow failing its
+            bar is removed.
           </li>
         </ul>
       </div>

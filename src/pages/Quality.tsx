@@ -23,7 +23,9 @@ export default function Quality() {
             transition={{ delay: i * 0.06, duration: 0.35 }}
           >
             <h3 className="text-sm font-semibold text-zinc-100">{b.title}</h3>
-            <p className="mt-0.5 text-[11px] uppercase tracking-[0.14em] text-zinc-500">{b.subtitle}</p>
+            <p className="mt-0.5 text-[11px] uppercase tracking-[0.14em] text-zinc-500">
+              {b.subtitle}
+            </p>
             <p className="mt-2.5 text-xs leading-relaxed text-zinc-400">{b.body}</p>
           </motion.div>
         ))}

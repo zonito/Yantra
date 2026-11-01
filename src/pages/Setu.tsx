@@ -36,7 +36,8 @@ const diagrams: {
 }[] = [
   {
     title: 'Every minute: the live broker feed',
-    blurb: 'The daemon asks, the Gateway answers, Kubera stores a complete snapshot. Nothing is partial: an incomplete read is labelled, never served as truth.',
+    blurb:
+      'The daemon asks, the Gateway answers, Kubera stores a complete snapshot. Nothing is partial: an incomplete read is labelled, never served as truth.',
     actors: ['IB Gateway', 'Setu daemon', 'Kubera', 'Panel + alerts'],
     accent: READ,
     steps: [
@@ -49,7 +50,8 @@ const diagrams: {
   },
   {
     title: 'Placing a GTC take-profit',
-    blurb: 'The standard order flow. Molang stages, a human approves, the executor re-checks everything against the live book before it transmits.',
+    blurb:
+      'The standard order flow. Molang stages, a human approves, the executor re-checks everything against the live book before it transmits.',
     actors: ['Molang', 'Kubera', 'Zonito', 'setu-exec', 'IB Gateway'],
     accent: CONTROL,
     steps: [
@@ -64,7 +66,8 @@ const diagrams: {
   },
   {
     title: 'Cancelling a hand order — the socket route',
-    blurb: 'Orders placed in TWS or the Gateway carry a session id once binding is asserted. That id is the cancel handle; the binding call is client-0 only.',
+    blurb:
+      'Orders placed in TWS or the Gateway carry a session id once binding is asserted. That id is the cancel handle; the binding call is client-0 only.',
     actors: ['Kubera', 'Zonito', 'setu-exec', 'IB Gateway'],
     accent: CONTROL,
     steps: [
@@ -79,7 +82,8 @@ const diagrams: {
   },
   {
     title: 'Cancelling a portal order — the web route',
-    blurb: 'Orders born in Client Portal never get a socket session id, so no socket cancel can ever reach them. The CP Gateway session is the only handle.',
+    blurb:
+      'Orders born in Client Portal never get a socket session id, so no socket cancel can ever reach them. The CP Gateway session is the only handle.',
     actors: ['setu-exec', 'CP Gateway', 'IBKR Web API', 'Broker feed'],
     accent: SESSION,
     steps: [
@@ -93,7 +97,8 @@ const diagrams: {
   },
   {
     title: 'The 06:45 Flex fetch',
-    blurb: 'The morning statement, fetched instead of downloaded by hand. The converter rebuilds the exact portal statement file from Flex sections, proven byte-exact against the real thing.',
+    blurb:
+      'The morning statement, fetched instead of downloaded by hand. The converter rebuilds the exact portal statement file from Flex sections, proven byte-exact against the real thing.',
     actors: ['launchd', 'flex_pull', 'IBKR Flex', 'Converter', 'Kubera'],
     accent: DATA,
     steps: [
@@ -109,7 +114,8 @@ const diagrams: {
   },
   {
     title: 'CP Gateway session lifecycle',
-    blurb: 'A session belongs to a username, not an account, and only a human with the 2FA can create one. Everything else — the tickle, the health state — is machinery around that fact.',
+    blurb:
+      'A session belongs to a username, not an account, and only a human with the 2FA can create one. Everything else — the tickle, the health state — is machinery around that fact.',
     actors: ['Human', 'Browser', 'CP Gateway', 'IBKR SSO', 'Yama'],
     accent: SESSION,
     steps: [
@@ -166,7 +172,7 @@ const facts: [string, string][] = [
   ],
   [
     'CP Gateways',
-    "Both on the Studio: port 5001 (zonito.setu.web) and 5002 (nikhila.setu.web, its IP allow-list locked to her machine and localhost). Build a27ed421 — the build IBKR ships today. Sessions compete per username, never per account.",
+    'Both on the Studio: port 5001 (zonito.setu.web) and 5002 (nikhila.setu.web, its IP allow-list locked to her machine and localhost). Build a27ed421 — the build IBKR ships today. Sessions compete per username, never per account.',
   ],
   [
     'Kubera',
@@ -199,9 +205,8 @@ export default function Setu() {
       <p className="mt-3 max-w-2xl text-sm leading-relaxed text-zinc-400">
         Setu — Sanskrit for <em>bridge</em> — is everything between the two Interactive Brokers
         accounts and the book: the Gateways, the read daemons, the guarded executors, the Client
-        Portal gateways and the morning Flex fetch. Built across 23–29 Oct 2026, it replaced
-        portal screenshots and hand-uploaded files with a live broker feed and a controlled
-        order channel.
+        Portal gateways and the morning Flex fetch. Built across 23–29 Oct 2026, it replaced portal
+        screenshots and hand-uploaded files with a live broker feed and a controlled order channel.
       </p>
 
       <h2 className="mt-12 text-xs font-semibold uppercase tracking-[0.18em] text-zinc-500">
@@ -211,10 +216,10 @@ export default function Setu() {
         <ArchitectureDiagram />
       </div>
       <p className="mt-3 max-w-2xl text-xs leading-relaxed text-zinc-500">
-        Pulses travel in the direction of flow. Two things worth noticing: Kubera sits at the
-        centre but touches no Gateway directly, and Nikhila's executor reaches across the
-        tailnet twice — her snapshots flow to Kubera on the Studio, and her web cancels flow
-        back to her CP Gateway, which also lives on the Studio.
+        Pulses travel in the direction of flow. Two things worth noticing: Kubera sits at the centre
+        but touches no Gateway directly, and Nikhila's executor reaches across the tailnet twice —
+        her snapshots flow to Kubera on the Studio, and her web cancels flow back to her CP Gateway,
+        which also lives on the Studio.
       </p>
 
       <h2 className="mt-12 text-xs font-semibold uppercase tracking-[0.18em] text-zinc-500">
@@ -277,7 +282,9 @@ export default function Setu() {
             key={k}
             className={`grid gap-1 px-5 py-4 sm:grid-cols-[160px_1fr] sm:gap-4 ${i % 2 ? 'bg-zinc-900/30' : ''}`}
           >
-            <p className="text-[11px] font-semibold uppercase tracking-[0.14em] text-zinc-500">{k}</p>
+            <p className="text-[11px] font-semibold uppercase tracking-[0.14em] text-zinc-500">
+              {k}
+            </p>
             <p className="text-xs leading-relaxed text-zinc-300">{v}</p>
           </div>
         ))}

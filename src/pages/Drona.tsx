@@ -20,9 +20,9 @@ export default function Drona() {
         Drona: support, resistance, trend
       </h1>
       <p className="mt-3 max-w-2xl text-sm leading-relaxed text-zinc-400">
-        Drona is the technicals read for the pipeline — support and resistance levels,
-        trend and RSI consumed at 14:00 for entries, exits and strike geometry. Its
-        premium-lab is the compact cached summary the jobs actually pull.
+        Drona is the technicals read for the pipeline — support and resistance levels, trend and RSI
+        consumed at 14:00 for entries, exits and strike geometry. Its premium-lab is the compact
+        cached summary the jobs actually pull.
       </p>
 
       <h2 className="mt-12 text-xs font-semibold uppercase tracking-[0.18em] text-zinc-500">
@@ -52,8 +52,8 @@ export default function Drona() {
         Read it with the caveats attached
       </h2>
       <p className="mt-2 max-w-2xl text-xs text-zinc-500">
-        From the Sep 2026 Drona/Vidhura regression study (454 tickers, 5y): most
-        technicals are noise on the broad universe.
+        From the Sep 2026 Drona/Vidhura regression study (454 tickers, 5y): most technicals are
+        noise on the broad universe.
       </p>
       <div className="mt-4 grid gap-3 sm:grid-cols-2">
         {dronaCaveats.map((c, i) => (
@@ -79,14 +79,19 @@ export default function Drona() {
             key={k}
             className={`grid gap-1 px-5 py-4 sm:grid-cols-[160px_1fr] sm:gap-4 ${i % 2 ? 'bg-zinc-900/30' : ''}`}
           >
-            <p className="text-[11px] font-semibold uppercase tracking-[0.14em] text-zinc-500">{k}</p>
+            <p className="text-[11px] font-semibold uppercase tracking-[0.14em] text-zinc-500">
+              {k}
+            </p>
             <p className="text-xs leading-relaxed text-zinc-300">{v}</p>
           </div>
         ))}
       </div>
 
       <div className="mt-10 flex flex-wrap gap-3">
-        <Link to="/stage/recommend" className="text-xs font-medium text-amber-300 hover:text-amber-200">
+        <Link
+          to="/stage/recommend"
+          className="text-xs font-medium text-amber-300 hover:text-amber-200"
+        >
           ← 14:00 recommendations
         </Link>
         <Link to="/vidhura" className="text-xs font-medium text-amber-300 hover:text-amber-200">

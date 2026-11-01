@@ -25,7 +25,9 @@ function HandoffCard({ h, i }: { h: Handoff; i: number }) {
           {control ? 'CONTROL' : 'RISK'}
         </span>
       </div>
-      <p className={`mt-2 font-mono text-[11px] leading-snug ${control ? 'text-emerald-300/80' : 'text-red-300/80'}`}>
+      <p
+        className={`mt-2 font-mono text-[11px] leading-snug ${control ? 'text-emerald-300/80' : 'text-red-300/80'}`}
+      >
         {h.risk}
       </p>
       <motion.div
@@ -42,14 +44,18 @@ function HandoffCard({ h, i }: { h: Handoff; i: number }) {
             ['Contract today', h.contract],
           ].map(([k, v]) => (
             <div key={k}>
-              <dt className="text-[10px] font-semibold uppercase tracking-[0.16em] text-zinc-500">{k}</dt>
+              <dt className="text-[10px] font-semibold uppercase tracking-[0.16em] text-zinc-500">
+                {k}
+              </dt>
               <dd className="mt-0.5 text-xs leading-relaxed text-zinc-300">{v}</dd>
             </div>
           ))}
         </dl>
       </motion.div>
       {!open && (
-        <p className="mt-3 text-[11px] text-zinc-600">Tap for producer · artifact · consumer · contract</p>
+        <p className="mt-3 text-[11px] text-zinc-600">
+          Tap for producer · artifact · consumer · contract
+        </p>
       )}
     </motion.div>
   )
@@ -66,8 +72,8 @@ export default function Handoffs() {
         Where reliability is won or lost
       </h1>
       <p className="mt-3 max-w-2xl text-sm leading-relaxed text-zinc-400">
-        Each boundary needs an explicit contract: who produces it, who consumes it, what
-        “fresh” means, and how the consumer fails when it is absent.
+        Each boundary needs an explicit contract: who produces it, who consumes it, what “fresh”
+        means, and how the consumer fails when it is absent.
       </p>
       <div className="mt-8 grid gap-3 lg:grid-cols-2">
         {handoffs.map((h, i) => (

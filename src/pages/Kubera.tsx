@@ -21,10 +21,10 @@ export default function Kubera() {
         Kubera: the book, the discovery, the universe
       </h1>
       <p className="mt-3 max-w-2xl text-sm leading-relaxed text-zinc-400">
-        Everything the wheel jobs decide on lives here: the live book with per-account
-        reserve math, the deterministic candidate screen, the theme-organized watchlist
-        universe, momentum scores and correlation peers. The 13:30, 14:00 and 14:30 runs
-        read Kubera first; vendors and engines are second opinions.
+        Everything the wheel jobs decide on lives here: the live book with per-account reserve math,
+        the deterministic candidate screen, the theme-organized watchlist universe, momentum scores
+        and correlation peers. The 13:30, 14:00 and 14:30 runs read Kubera first; vendors and
+        engines are second opinions.
       </p>
 
       <h2 className="mt-12 text-xs font-semibold uppercase tracking-[0.18em] text-zinc-500">
@@ -55,18 +55,20 @@ export default function Kubera() {
       </h2>
       <div className="mt-4 grid gap-3 sm:grid-cols-2">
         <div className="rounded-2xl border border-zinc-800 bg-zinc-900/50 p-5">
-          <h3 className="text-sm font-semibold text-zinc-100">Theme-organized, never label-grouped</h3>
+          <h3 className="text-sm font-semibold text-zinc-100">
+            Theme-organized, never label-grouped
+          </h3>
           <p className="mt-1.5 text-xs leading-relaxed text-zinc-500">
             Watchlists are stories — US Oncology Biotech, GLP-1 &amp; Obesity, Gene &amp; Cell
-            Therapy — not "high growth" buckets. A ticker can live in several themes at once;
-            a gate-kill never drops a name from attention.
+            Therapy — not "high growth" buckets. A ticker can live in several themes at once; a
+            gate-kill never drops a name from attention.
           </p>
         </div>
         <div className="rounded-2xl border border-zinc-800 bg-zinc-900/50 p-5">
           <h3 className="text-sm font-semibold text-zinc-100">Shortlisted To Buy is read-only</h3>
           <p className="mt-1.5 text-xs leading-relaxed text-zinc-500">
-            wl_shortlisted is manually curated. Jobs read it for discovery and never add,
-            remove or reorder it. The pruner protects holdings and legacy names the same way.
+            wl_shortlisted is manually curated. Jobs read it for discovery and never add, remove or
+            reorder it. The pruner protects holdings and legacy names the same way.
           </p>
         </div>
       </div>
@@ -80,17 +82,25 @@ export default function Kubera() {
             key={k}
             className={`grid gap-1 px-5 py-4 sm:grid-cols-[160px_1fr] sm:gap-4 ${i % 2 ? 'bg-zinc-900/30' : ''}`}
           >
-            <p className="text-[11px] font-semibold uppercase tracking-[0.14em] text-zinc-500">{k}</p>
+            <p className="text-[11px] font-semibold uppercase tracking-[0.14em] text-zinc-500">
+              {k}
+            </p>
             <p className="text-xs leading-relaxed text-zinc-300">{v}</p>
           </div>
         ))}
       </div>
 
       <div className="mt-10 flex flex-wrap gap-3">
-        <Link to="/stage/ecosystem" className="text-xs font-medium text-amber-300 hover:text-amber-200">
+        <Link
+          to="/stage/ecosystem"
+          className="text-xs font-medium text-amber-300 hover:text-amber-200"
+        >
           ← Ticker ecosystem
         </Link>
-        <Link to="/stage/recommend" className="text-xs font-medium text-amber-300 hover:text-amber-200">
+        <Link
+          to="/stage/recommend"
+          className="text-xs font-medium text-amber-300 hover:text-amber-200"
+        >
           14:00 recommendations →
         </Link>
       </div>

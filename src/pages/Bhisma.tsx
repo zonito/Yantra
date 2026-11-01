@@ -20,18 +20,17 @@ export default function Bhisma() {
         Bhisma: lawmakers and whales
       </h1>
       <p className="mt-3 max-w-2xl text-sm leading-relaxed text-zinc-400">
-        Bhisma tracks disclosed congressional trades and whale managers — holdings,
-        sector mix, insider scores — feeding the briefings. It is not part of the wheel
-        pipeline.
+        Bhisma tracks disclosed congressional trades and whale managers — holdings, sector mix,
+        insider scores — feeding the briefings. It is not part of the wheel pipeline.
       </p>
 
       <div className="mt-8 rounded-2xl border border-zinc-800 bg-zinc-900/50 p-5">
         <h2 className="text-sm font-semibold text-zinc-100">Health only over REST</h2>
         <p className="mt-1.5 text-xs leading-relaxed text-zinc-500">
-          <span className="font-mono text-slate-300">GET /api/v1/health</span> is the only
-          versioned route. All data reads go through CSRF-protected TanStack server
-          functions — not callable as cross-origin REST. Agents needing congressional or
-          holdings data programmatically should use Varuna's FMP endpoints instead.
+          <span className="font-mono text-slate-300">GET /api/v1/health</span> is the only versioned
+          route. All data reads go through CSRF-protected TanStack server functions — not callable
+          as cross-origin REST. Agents needing congressional or holdings data programmatically
+          should use Varuna's FMP endpoints instead.
         </p>
       </div>
 
@@ -74,7 +73,9 @@ export default function Bhisma() {
             key={k}
             className={`grid gap-1 px-5 py-4 sm:grid-cols-[160px_1fr] sm:gap-4 ${i % 2 ? 'bg-zinc-900/30' : ''}`}
           >
-            <p className="text-[11px] font-semibold uppercase tracking-[0.14em] text-zinc-500">{k}</p>
+            <p className="text-[11px] font-semibold uppercase tracking-[0.14em] text-zinc-500">
+              {k}
+            </p>
             <p className="text-xs leading-relaxed text-zinc-300">{v}</p>
           </div>
         ))}

@@ -23,7 +23,14 @@ const centre = (i: number, n: number) => ((i + 0.5) / n) * 100
  * loop, with a dot travelling along the active arrow. Hover pauses;
  * clicking a step jumps to it.
  */
-export default function SequenceDiagram({ title, blurb, actors, steps, accent, intervalMs = 1600 }: Props) {
+export default function SequenceDiagram({
+  title,
+  blurb,
+  actors,
+  steps,
+  accent,
+  intervalMs = 1600,
+}: Props) {
   const [active, setActive] = useState(0)
   const [paused, setPaused] = useState(false)
   const timer = useRef<number | null>(null)
@@ -131,7 +138,9 @@ export default function SequenceDiagram({ title, blurb, actors, steps, accent, i
                     <span
                       className="absolute top-1/2 -translate-y-1/2 text-[10px] leading-none"
                       style={{
-                        left: dirRight ? `calc(${centre(s.to, n)}% - 9px)` : `calc(${centre(s.to, n)}% - 1px)`,
+                        left: dirRight
+                          ? `calc(${centre(s.to, n)}% - 9px)`
+                          : `calc(${centre(s.to, n)}% - 1px)`,
                         color: state === 'active' ? accent : '#52525b',
                         transform: `translateY(-50%) ${dirRight ? '' : 'scaleX(-1)'}`,
                       }}
@@ -143,10 +152,17 @@ export default function SequenceDiagram({ title, blurb, actors, steps, accent, i
                       <motion.span
                         key={`dot-${active}`}
                         className="absolute top-1/2 h-2 w-2 rounded-full"
-                        style={{ background: accent, boxShadow: `0 0 10px 2px ${accent}55`, marginTop: -4 }}
+                        style={{
+                          background: accent,
+                          boxShadow: `0 0 10px 2px ${accent}55`,
+                          marginTop: -4,
+                        }}
                         initial={{ left: `calc(${centre(s.from, n)}% - 4px)` }}
                         animate={{ left: `calc(${centre(s.to, n)}% - 4px)` }}
-                        transition={{ duration: Math.min(intervalMs / 1000 - 0.35, 1.3), ease: 'easeInOut' }}
+                        transition={{
+                          duration: Math.min(intervalMs / 1000 - 0.35, 1.3),
+                          ease: 'easeInOut',
+                        }}
                       />
                     )}
                     {/* label */}

@@ -35,9 +35,9 @@ export default function Machinery() {
         Eight views, different clocks
       </h2>
       <p className="mt-2 max-w-2xl text-xs text-zinc-500">
-        effective weightᵢ = configured weightᵢ × confidenceᵢ → blend → agreement
-        stretch → conviction gate → signal band. Technical and volume can age within a day;
-        fundamental and valuation are deliberately weekly.
+        effective weightᵢ = configured weightᵢ × confidenceᵢ → blend → agreement stretch →
+        conviction gate → signal band. Technical and volume can age within a day; fundamental and
+        valuation are deliberately weekly.
       </p>
       <div className="mt-4 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
         {agentViews.map((a, i) => (
@@ -52,7 +52,9 @@ export default function Machinery() {
               <h3 className="text-sm font-semibold text-zinc-100">{a.name}</h3>
               <span className="text-xs font-semibold text-amber-200">{a.weight}</span>
             </div>
-            <p className="mt-1 text-[11px] uppercase tracking-[0.14em] text-zinc-500">⟳ {a.clock}</p>
+            <p className="mt-1 text-[11px] uppercase tracking-[0.14em] text-zinc-500">
+              ⟳ {a.clock}
+            </p>
             <p className="mt-2 text-xs text-zinc-500">{a.detail}</p>
           </motion.div>
         ))}
@@ -62,10 +64,10 @@ export default function Machinery() {
         Rebalance · 4 Oct 2026 · live in Kubera
       </h2>
       <p className="mt-2 max-w-2xl text-xs leading-relaxed text-zinc-500">
-        The composite’s job is own-worthiness — what is safe to own if assigned. Timing belongs
-        to the 13:30 dimmer, pricing to the 14:00 gates. Valuation was cut because DCF has almost
-        no predictive power over a 30–45 day put and double-counts Fundamental; the freed weight
-        went to tails (Quantitative), premium richness (Options) and the freshest read (Technical).
+        The composite’s job is own-worthiness — what is safe to own if assigned. Timing belongs to
+        the 13:30 dimmer, pricing to the 14:00 gates. Valuation was cut because DCF has almost no
+        predictive power over a 30–45 day put and double-counts Fundamental; the freed weight went
+        to tails (Quantitative), premium richness (Options) and the freshest read (Technical).
       </p>
       <div className="mt-4 overflow-x-auto rounded-2xl border border-zinc-800">
         <table className="w-full min-w-[560px] text-left text-xs">
@@ -113,7 +115,9 @@ export default function Machinery() {
       </p>
       <div className="mt-4 grid gap-3 lg:grid-cols-2">
         <div className="rounded-2xl border border-zinc-800 bg-zinc-900/50 p-5">
-          <p className="text-[10px] font-semibold uppercase tracking-[0.16em] text-zinc-500">Service</p>
+          <p className="text-[10px] font-semibold uppercase tracking-[0.16em] text-zinc-500">
+            Service
+          </p>
           <p className="mt-1 font-mono text-xs text-zinc-300">{screenerFacts.service}</p>
           <p className="mt-1 font-mono text-xs text-zinc-500">{screenerFacts.cli}</p>
           <p className="mt-3 font-mono text-xs text-zinc-300">{screenerFacts.get}</p>
@@ -123,14 +127,19 @@ export default function Machinery() {
           </p>
           <div className="mt-2 flex flex-wrap gap-1.5">
             {screenerFacts.snapshotFields.map((f) => (
-              <span key={f} className="rounded-full bg-zinc-800/80 px-2.5 py-1 font-mono text-[11px] text-zinc-400">
+              <span
+                key={f}
+                className="rounded-full bg-zinc-800/80 px-2.5 py-1 font-mono text-[11px] text-zinc-400"
+              >
                 {f}
               </span>
             ))}
           </div>
         </div>
         <div className="rounded-2xl border border-zinc-800 bg-zinc-900/50 p-5">
-          <p className="text-[10px] font-semibold uppercase tracking-[0.16em] text-zinc-500">Gates</p>
+          <p className="text-[10px] font-semibold uppercase tracking-[0.16em] text-zinc-500">
+            Gates
+          </p>
           <ul className="mt-2 space-y-1.5">
             {screenerFacts.gates.map((g) => (
               <li key={g} className="text-xs leading-snug text-zinc-400">
@@ -139,13 +148,18 @@ export default function Machinery() {
               </li>
             ))}
           </ul>
-          <p className="mt-3 text-[10px] font-semibold uppercase tracking-[0.16em] text-zinc-500">Ranking</p>
+          <p className="mt-3 text-[10px] font-semibold uppercase tracking-[0.16em] text-zinc-500">
+            Ranking
+          </p>
           <p className="mt-1 text-xs text-zinc-400">{screenerFacts.ranking}</p>
         </div>
       </div>
       <div className="mt-3 grid grid-cols-2 gap-3 lg:grid-cols-4">
         {screenerFacts.stats.map((s) => (
-          <div key={s.label} className="rounded-2xl border border-zinc-800 bg-zinc-900/50 p-5 text-center">
+          <div
+            key={s.label}
+            className="rounded-2xl border border-zinc-800 bg-zinc-900/50 p-5 text-center"
+          >
             <p className="text-2xl font-bold text-zinc-100">{s.n}</p>
             <p className="mt-1 text-[11px] text-zinc-500">{s.label}</p>
           </div>

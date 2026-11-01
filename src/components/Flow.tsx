@@ -85,7 +85,9 @@ export function FlowDiagram() {
         <p className="font-mono text-[11px] uppercase tracking-[0.16em] text-zinc-500">
           {phases.length} phases · {phases.reduce((a, p) => a + p.nodes.length, 0)} nodes
         </p>
-        <p className="text-[11px] text-zinc-600">Tap any node to open its inputs, parts and outputs.</p>
+        <p className="text-[11px] text-zinc-600">
+          Tap any node to open its inputs, parts and outputs.
+        </p>
       </div>
       {phases.map((p, i) => (
         <PhaseSection key={p.id} phase={p} phaseIndex={i} />

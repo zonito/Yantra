@@ -38,7 +38,13 @@ function Box({ x, y, w, h, title, sub, accent }: BoxSpec) {
       <text x={x + 14} y={y + 23} fill="#f4f4f5" fontSize={13.5} fontWeight={600}>
         {title}
       </text>
-      <text x={x + 14} y={y + 41} fill="#a1a1aa" fontSize={10.5} fontFamily="ui-monospace, monospace">
+      <text
+        x={x + 14}
+        y={y + 41}
+        fill="#a1a1aa"
+        fontSize={10.5}
+        fontFamily="ui-monospace, monospace"
+      >
         {sub}
       </text>
     </g>
@@ -100,7 +106,17 @@ function Edge({
   )
 }
 
-function Label({ x, y, children, colour = '#a1a1aa' }: { x: number; y: number; children: string; colour?: string }) {
+function Label({
+  x,
+  y,
+  children,
+  colour = '#a1a1aa',
+}: {
+  x: number
+  y: number
+  children: string
+  colour?: string
+}) {
   return (
     <text x={x} y={y} fill={colour} fontSize={10.5} fontFamily="ui-monospace, monospace">
       {children}
@@ -111,7 +127,12 @@ function Label({ x, y, children, colour = '#a1a1aa' }: { x: number; y: number; c
 export default function ArchitectureDiagram() {
   return (
     <div className="overflow-x-auto rounded-2xl border border-zinc-800 bg-[#0a0a0e] p-3">
-      <svg viewBox="0 0 1180 800" className="min-w-[980px]" role="img" aria-label="IBKR architecture diagram">
+      <svg
+        viewBox="0 0 1180 800"
+        className="min-w-[980px]"
+        role="img"
+        aria-label="IBKR architecture diagram"
+      >
         {/* zones */}
         <Zone x={20} y={88} w={284} h={268} label="PEOPLE" />
         <Zone x={20} y={372} w={284} h={190} label="FILES + PHONE" />
@@ -151,42 +172,148 @@ export default function ArchitectureDiagram() {
         <Edge d="M600 174 C580 280 566 350 556 422" colour={MANAGE} dashed />
 
         {/* edge labels */}
-        <Label x={318} y={240} colour={READ}>snapshots</Label>
-        <Label x={676} y={76} colour={READ}>snapshots · tailnet</Label>
-        <Label x={604} y={296} colour={CONTROL}>polls APPROVED · events</Label>
-        <Label x={428} y={390} colour={CONTROL}>place / cancel</Label>
-        <Label x={690} y={266} colour={CONTROL}>polls APPROVED · events</Label>
-        <Label x={806} y={352} colour={CONTROL}>web cancels</Label>
-        <Label x={622} y={408} colour={SESSION}>web cancels + tickle</Label>
-        <Label x={706} y={352} colour={SESSION}>brokerage session</Label>
-        <Label x={716} y={330} colour={DATA}>SendRequest · GetStatement</Label>
-        <Label x={228} y={300} colour={DATA}>converted CSV</Label>
-        <Label x={290} y={306} colour={DATA}>importer</Label>
-        <Label x={288} y={134}>approves</Label>
-        <Label x={408} y={180}>login + 2FA</Label>
-        <Label x={416} y={268}>her login</Label>
-        <Label x={238} y={206}>stages rows</Label>
-        <Label x={420} y={352}>margin alerts</Label>
-        <Label x={682} y={234} colour={MANAGE}>start/stop</Label>
+        <Label x={318} y={240} colour={READ}>
+          snapshots
+        </Label>
+        <Label x={676} y={76} colour={READ}>
+          snapshots · tailnet
+        </Label>
+        <Label x={604} y={296} colour={CONTROL}>
+          polls APPROVED · events
+        </Label>
+        <Label x={428} y={390} colour={CONTROL}>
+          place / cancel
+        </Label>
+        <Label x={690} y={266} colour={CONTROL}>
+          polls APPROVED · events
+        </Label>
+        <Label x={806} y={352} colour={CONTROL}>
+          web cancels
+        </Label>
+        <Label x={622} y={408} colour={SESSION}>
+          web cancels + tickle
+        </Label>
+        <Label x={706} y={352} colour={SESSION}>
+          brokerage session
+        </Label>
+        <Label x={716} y={330} colour={DATA}>
+          SendRequest · GetStatement
+        </Label>
+        <Label x={228} y={300} colour={DATA}>
+          converted CSV
+        </Label>
+        <Label x={290} y={306} colour={DATA}>
+          importer
+        </Label>
+        <Label x={288} y={134}>
+          approves
+        </Label>
+        <Label x={408} y={180}>
+          login + 2FA
+        </Label>
+        <Label x={416} y={268}>
+          her login
+        </Label>
+        <Label x={238} y={206}>
+          stages rows
+        </Label>
+        <Label x={420} y={352}>
+          margin alerts
+        </Label>
+        <Label x={682} y={234} colour={MANAGE}>
+          start/stop
+        </Label>
 
         {/* people */}
         <Box x={40} y={118} w={244} h={50} title="Zonito" sub="approves in the panel" />
         <Box x={40} y={182} w={244} h={50} title="Nikhila" sub="her logins · her 2FA" />
         <Box x={40} y={246} w={244} h={50} title="Molang" sub="stages rows · watches feeds" />
         {/* files + phone */}
-        <Box x={40} y={402} w={244} h={56} title="Transactions / IBKR" sub="<MonYY>.csv · the morning file" accent={DATA} />
+        <Box
+          x={40}
+          y={402}
+          w={244}
+          h={56}
+          title="Transactions / IBKR"
+          sub="<MonYY>.csv · the morning file"
+          accent={DATA}
+        />
         <Box x={40} y={474} w={244} h={48} title="Phone" sub="Pushover margin alerts" />
 
         {/* studio */}
-        <Box x={344} y={118} w={208} h={56} title="Kubera" sub=":8000 · control plane + feeds" accent={CONTROL} />
-        <Box x={572} y={118} w={204} h={56} title="Yama" sub=":3006 · service manager" accent={MANAGE} />
-        <Box x={344} y={190} w={208} h={50} title="flex_pull" sub="06:45 daily · v0.2.7" accent={DATA} />
+        <Box
+          x={344}
+          y={118}
+          w={208}
+          h={56}
+          title="Kubera"
+          sub=":8000 · control plane + feeds"
+          accent={CONTROL}
+        />
+        <Box
+          x={572}
+          y={118}
+          w={204}
+          h={56}
+          title="Yama"
+          sub=":3006 · service manager"
+          accent={MANAGE}
+        />
+        <Box
+          x={344}
+          y={190}
+          w={208}
+          h={50}
+          title="flex_pull"
+          sub="06:45 daily · v0.2.7"
+          accent={DATA}
+        />
         <Box x={572} y={190} w={204} h={50} title="Varuna" sub=":8400 · Pushover + vendors" />
-        <Box x={344} y={286} w={208} h={56} title="IB Gateway · Zonito" sub="socket :4001 · his login" accent={SESSION} />
-        <Box x={572} y={286} w={204} h={56} title="CP Gateway · Zonito" sub=":5001 · zonito.setu.web" accent={SESSION} />
-        <Box x={572} y={358} w={204} h={56} title="CP Gateway · Nikhila" sub=":5002 · nikhila.setu.web" accent={SESSION} />
-        <Box x={344} y={358} w={208} h={50} title="Setu daemon" sub="read-only · zero placeOrder" accent={READ} />
-        <Box x={344} y={424} w={208} h={56} title="setu-exec" sub="client 91 + 0 · v0.9.3" accent={CONTROL} />
+        <Box
+          x={344}
+          y={286}
+          w={208}
+          h={56}
+          title="IB Gateway · Zonito"
+          sub="socket :4001 · his login"
+          accent={SESSION}
+        />
+        <Box
+          x={572}
+          y={286}
+          w={204}
+          h={56}
+          title="CP Gateway · Zonito"
+          sub=":5001 · zonito.setu.web"
+          accent={SESSION}
+        />
+        <Box
+          x={572}
+          y={358}
+          w={204}
+          h={56}
+          title="CP Gateway · Nikhila"
+          sub=":5002 · nikhila.setu.web"
+          accent={SESSION}
+        />
+        <Box
+          x={344}
+          y={358}
+          w={208}
+          h={50}
+          title="Setu daemon"
+          sub="read-only · zero placeOrder"
+          accent={READ}
+        />
+        <Box
+          x={344}
+          y={424}
+          w={208}
+          h={56}
+          title="setu-exec"
+          sub="client 91 + 0 · v0.9.3"
+          accent={CONTROL}
+        />
         <text x={344} y={530} fill="#71717a" fontSize={11}>
           Both CP Gateways live here now — hers moved from her Mac on 29 Oct.
         </text>
@@ -195,13 +322,44 @@ export default function ArchitectureDiagram() {
         </text>
 
         {/* nikhila's mac */}
-        <Box x={840} y={118} w={300} h={56} title="IB Gateway · Nikhila" sub="socket :4001 · her login" accent={SESSION} />
-        <Box x={840} y={190} w={300} h={50} title="Setu daemon" sub="read-only · her account only" accent={READ} />
-        <Box x={840} y={256} w={300} h={56} title="setu-exec" sub="her account only · web → Studio :5002" accent={CONTROL} />
+        <Box
+          x={840}
+          y={118}
+          w={300}
+          h={56}
+          title="IB Gateway · Nikhila"
+          sub="socket :4001 · her login"
+          accent={SESSION}
+        />
+        <Box
+          x={840}
+          y={190}
+          w={300}
+          h={50}
+          title="Setu daemon"
+          sub="read-only · her account only"
+          accent={READ}
+        />
+        <Box
+          x={840}
+          y={256}
+          w={300}
+          h={56}
+          title="setu-exec"
+          sub="her account only · web → Studio :5002"
+          accent={CONTROL}
+        />
 
         {/* ibkr */}
         <Box x={840} y={452} w={300} h={50} title="Brokerage backends" sub="socket API sessions" />
-        <Box x={840} y={518} w={300} h={50} title="Web API backend" sub="api.ibkr.com · CP sessions" />
+        <Box
+          x={840}
+          y={518}
+          w={300}
+          h={50}
+          title="Web API backend"
+          sub="api.ibkr.com · CP sessions"
+        />
         <Box x={840} y={584} w={300} h={50} title="Flex Web Service" sub="statement generation" />
         <text x={840} y={672} fill="#71717a" fontSize={11}>
           Sessions compete per username — never per account.
@@ -210,15 +368,25 @@ export default function ArchitectureDiagram() {
         {/* legend */}
         <g fontSize={11} fontFamily="ui-monospace, monospace">
           <circle cx={36} cy={752} r={4} fill={READ} />
-          <text x={48} y={756} fill="#a1a1aa">read plane</text>
+          <text x={48} y={756} fill="#a1a1aa">
+            read plane
+          </text>
           <circle cx={150} cy={752} r={4} fill={CONTROL} />
-          <text x={162} y={756} fill="#a1a1aa">control plane</text>
+          <text x={162} y={756} fill="#a1a1aa">
+            control plane
+          </text>
           <circle cx={268} cy={752} r={4} fill={SESSION} />
-          <text x={280} y={756} fill="#a1a1aa">session plane</text>
+          <text x={280} y={756} fill="#a1a1aa">
+            session plane
+          </text>
           <circle cx={386} cy={752} r={4} fill={DATA} />
-          <text x={398} y={756} fill="#a1a1aa">flex / data</text>
+          <text x={398} y={756} fill="#a1a1aa">
+            flex / data
+          </text>
           <circle cx={492} cy={752} r={4} fill={MANAGE} />
-          <text x={504} y={756} fill="#a1a1aa">yama management</text>
+          <text x={504} y={756} fill="#a1a1aa">
+            yama management
+          </text>
         </g>
       </svg>
     </div>

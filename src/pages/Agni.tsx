@@ -22,10 +22,9 @@ export default function Agni() {
         Agni: what the options market is pricing
       </h1>
       <p className="mt-3 max-w-2xl text-sm leading-relaxed text-zinc-400">
-        Agni turns the nightly IV history and live option chains into decision context —
-        richness, fear pricing, tail honesty and dealer positioning. It is positioning
-        context for the 14:00 pass and the yield screens for discovery. It never triggers
-        an entry.
+        Agni turns the nightly IV history and live option chains into decision context — richness,
+        fear pricing, tail honesty and dealer positioning. It is positioning context for the 14:00
+        pass and the yield screens for discovery. It never triggers an entry.
       </p>
 
       <h2 className="mt-12 text-xs font-semibold uppercase tracking-[0.18em] text-zinc-500">
@@ -55,8 +54,8 @@ export default function Agni() {
         Read it with the caveats attached
       </h2>
       <p className="mt-2 max-w-2xl text-xs text-zinc-500">
-        Agni's numbers are quoted with their validation flags — never clean. These are the
-        standing caveats from the Sep 2026 validation study.
+        Agni's numbers are quoted with their validation flags — never clean. These are the standing
+        caveats from the Sep 2026 validation study.
       </p>
       <div className="mt-4 grid gap-3 sm:grid-cols-2">
         {agniCaveats.map((c, i) => (
@@ -82,7 +81,9 @@ export default function Agni() {
             key={k}
             className={`grid gap-1 px-5 py-4 sm:grid-cols-[160px_1fr] sm:gap-4 ${i % 2 ? 'bg-zinc-900/30' : ''}`}
           >
-            <p className="text-[11px] font-semibold uppercase tracking-[0.14em] text-zinc-500">{k}</p>
+            <p className="text-[11px] font-semibold uppercase tracking-[0.14em] text-zinc-500">
+              {k}
+            </p>
             <p className="text-xs leading-relaxed text-zinc-300">{v}</p>
           </div>
         ))}
@@ -92,7 +93,10 @@ export default function Agni() {
         <Link to="/stage/agni" className="text-xs font-medium text-amber-300 hover:text-amber-200">
           ← Agni node in the flow
         </Link>
-        <Link to="/stage/recommend" className="text-xs font-medium text-amber-300 hover:text-amber-200">
+        <Link
+          to="/stage/recommend"
+          className="text-xs font-medium text-amber-300 hover:text-amber-200"
+        >
           14:00 recommendations →
         </Link>
       </div>

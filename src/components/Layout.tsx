@@ -65,7 +65,13 @@ function NavDropdown({ label, items }: { label: string; items: { to: string; lab
           fill="none"
           className={`transition-transform ${open ? 'rotate-180' : ''}`}
         >
-          <path d="M2 3.5L5 6.5L8 3.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+          <path
+            d="M2 3.5L5 6.5L8 3.5"
+            stroke="currentColor"
+            strokeWidth="1.5"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          />
         </svg>
       </button>
       {open && (
@@ -197,7 +203,8 @@ function Shell() {
       </motion.main>
       <footer className="border-t border-zinc-800/80 py-6">
         <p className="mx-auto max-w-7xl px-4 text-[11px] text-zinc-600 sm:px-6">
-          Yantra · interactive Kubera Wheel Pipeline Architecture · facts from the 4 Oct 2026 runbook
+          Yantra · interactive Kubera Wheel Pipeline Architecture · facts from the 4 Oct 2026
+          runbook
         </p>
       </footer>
     </div>

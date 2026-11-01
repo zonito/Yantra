@@ -20,9 +20,9 @@ export default function Vidhura() {
         Vidhura: valuation and holders
       </h1>
       <p className="mt-3 max-w-2xl text-sm leading-relaxed text-zinc-400">
-        Vidhura is the valuation read for the pipeline — P/E, P/B, analyst targets and
-        ratings consumed at 14:00 for the fundamentals leg. Its coverage is partial, so
-        every read below is documented from verified usage only.
+        Vidhura is the valuation read for the pipeline — P/E, P/B, analyst targets and ratings
+        consumed at 14:00 for the fundamentals leg. Its coverage is partial, so every read below is
+        documented from verified usage only.
       </p>
 
       <h2 className="mt-12 text-xs font-semibold uppercase tracking-[0.18em] text-zinc-500">
@@ -75,7 +75,9 @@ export default function Vidhura() {
             key={k}
             className={`grid gap-1 px-5 py-4 sm:grid-cols-[160px_1fr] sm:gap-4 ${i % 2 ? 'bg-zinc-900/30' : ''}`}
           >
-            <p className="text-[11px] font-semibold uppercase tracking-[0.14em] text-zinc-500">{k}</p>
+            <p className="text-[11px] font-semibold uppercase tracking-[0.14em] text-zinc-500">
+              {k}
+            </p>
             <p className="text-xs leading-relaxed text-zinc-300">{v}</p>
           </div>
         ))}
@@ -85,7 +87,10 @@ export default function Vidhura() {
         <Link to="/drona" className="text-xs font-medium text-amber-300 hover:text-amber-200">
           ← Drona
         </Link>
-        <Link to="/stage/recommend" className="text-xs font-medium text-amber-300 hover:text-amber-200">
+        <Link
+          to="/stage/recommend"
+          className="text-xs font-medium text-amber-300 hover:text-amber-200"
+        >
           14:00 recommendations →
         </Link>
       </div>

@@ -33,13 +33,19 @@ function GapCard({ gap, i }: { gap: Gap; i: number }) {
             ['Target state', gap.target],
           ].map(([k, v]) => (
             <div key={k}>
-              <p className="text-[10px] font-semibold uppercase tracking-[0.16em] text-zinc-500">{k}</p>
+              <p className="text-[10px] font-semibold uppercase tracking-[0.16em] text-zinc-500">
+                {k}
+              </p>
               <p className="mt-0.5 text-xs leading-relaxed text-zinc-300">{v}</p>
             </div>
           ))}
         </div>
       </motion.div>
-      {!open && <p className="mt-3 text-[11px] text-zinc-600">Tap for mechanism · failure mode · target state</p>}
+      {!open && (
+        <p className="mt-3 text-[11px] text-zinc-600">
+          Tap for mechanism · failure mode · target state
+        </p>
+      )}
     </motion.div>
   )
 }
@@ -69,7 +75,10 @@ export default function Gaps() {
       </h2>
       <div className="mt-3 flex flex-wrap gap-2">
         {watchRisks.map((w) => (
-          <span key={w} className="rounded-full border border-zinc-800 bg-zinc-900/60 px-3 py-1.5 text-xs text-zinc-400">
+          <span
+            key={w}
+            className="rounded-full border border-zinc-800 bg-zinc-900/60 px-3 py-1.5 text-xs text-zinc-400"
+          >
             {w}
           </span>
         ))}

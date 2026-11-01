@@ -20,8 +20,8 @@ export default function Rashi() {
         Rashi: forex for the briefings
       </h1>
       <p className="mt-3 max-w-2xl text-sm leading-relaxed text-zinc-400">
-        Rashi is the forex read — rates, convert, history — feeding the briefings'
-        macro sleeve. It is not part of the wheel pipeline.
+        Rashi is the forex read — rates, convert, history — feeding the briefings' macro sleeve. It
+        is not part of the wheel pipeline.
       </p>
 
       <h2 className="mt-12 text-xs font-semibold uppercase tracking-[0.18em] text-zinc-500">
@@ -63,7 +63,9 @@ export default function Rashi() {
             key={k}
             className={`grid gap-1 px-5 py-4 sm:grid-cols-[160px_1fr] sm:gap-4 ${i % 2 ? 'bg-zinc-900/30' : ''}`}
           >
-            <p className="text-[11px] font-semibold uppercase tracking-[0.14em] text-zinc-500">{k}</p>
+            <p className="text-[11px] font-semibold uppercase tracking-[0.14em] text-zinc-500">
+              {k}
+            </p>
             <p className="text-xs leading-relaxed text-zinc-300">{v}</p>
           </div>
         ))}

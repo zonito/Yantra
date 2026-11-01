@@ -23,11 +23,10 @@ export default function Airavata() {
         Airavata: posture, with a reliability receipt
       </h1>
       <p className="mt-3 max-w-2xl text-sm leading-relaxed text-zinc-400">
-        Airavata reads smart-money regime per ticker and reports a posture — NEW ENTRIES
-        ALLOWED, REDUCE ONLY, or CASH PRIORITY. The posture is reliability-weighted
-        advisory context for the 13:30 dimmer and the 14:00 pass. It never blocks on its
-        own; every read carries its tier, sample size and probability, or it carries no
-        weight.
+        Airavata reads smart-money regime per ticker and reports a posture — NEW ENTRIES ALLOWED,
+        REDUCE ONLY, or CASH PRIORITY. The posture is reliability-weighted advisory context for the
+        13:30 dimmer and the 14:00 pass. It never blocks on its own; every read carries its tier,
+        sample size and probability, or it carries no weight.
       </p>
 
       <h2 className="mt-12 text-xs font-semibold uppercase tracking-[0.18em] text-zinc-500">
@@ -57,8 +56,8 @@ export default function Airavata() {
         Reliability contract
       </h2>
       <p className="mt-2 max-w-2xl text-xs text-zinc-500">
-        Ratified 4 Oct 2026: posture is reliability-weighted, never a hard block. The old
-        "CASH PRIORITY kills the idea" rule is retired everywhere.
+        Ratified 4 Oct 2026: posture is reliability-weighted, never a hard block. The old "CASH
+        PRIORITY kills the idea" rule is retired everywhere.
       </p>
       <div className="mt-4 grid gap-3 sm:grid-cols-2">
         {airavataReliability.map((c, i) => (
@@ -84,17 +83,25 @@ export default function Airavata() {
             key={k}
             className={`grid gap-1 px-5 py-4 sm:grid-cols-[160px_1fr] sm:gap-4 ${i % 2 ? 'bg-zinc-900/30' : ''}`}
           >
-            <p className="text-[11px] font-semibold uppercase tracking-[0.14em] text-zinc-500">{k}</p>
+            <p className="text-[11px] font-semibold uppercase tracking-[0.14em] text-zinc-500">
+              {k}
+            </p>
             <p className="text-xs leading-relaxed text-zinc-300">{v}</p>
           </div>
         ))}
       </div>
 
       <div className="mt-10 flex flex-wrap gap-3">
-        <Link to="/stage/dimmer" className="text-xs font-medium text-amber-300 hover:text-amber-200">
+        <Link
+          to="/stage/dimmer"
+          className="text-xs font-medium text-amber-300 hover:text-amber-200"
+        >
           ← 13:30 dimmer
         </Link>
-        <Link to="/stage/recommend" className="text-xs font-medium text-amber-300 hover:text-amber-200">
+        <Link
+          to="/stage/recommend"
+          className="text-xs font-medium text-amber-300 hover:text-amber-200"
+        >
           14:00 recommendations →
         </Link>
       </div>

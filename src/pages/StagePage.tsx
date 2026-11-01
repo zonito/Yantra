@@ -9,7 +9,9 @@ function BandLabel({ n, children }: { n: string; children: string }) {
   return (
     <div className="flex items-center gap-3">
       <span className="font-mono text-[11px] font-bold text-amber-300/80">{n}</span>
-      <h2 className="text-xs font-semibold uppercase tracking-[0.18em] text-zinc-400">{children}</h2>
+      <h2 className="text-xs font-semibold uppercase tracking-[0.18em] text-zinc-400">
+        {children}
+      </h2>
       <div className="h-px flex-1 bg-zinc-800/70" />
     </div>
   )
@@ -49,7 +51,11 @@ export default function StagePage() {
       />
 
       {/* header */}
-      <motion.div initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.35 }}>
+      <motion.div
+        initial={{ opacity: 0, y: 16 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.35 }}
+      >
         <p
           className="text-[11px] font-bold uppercase tracking-[0.2em]"
           style={{ color: node.accent }}
@@ -182,7 +188,9 @@ export default function StagePage() {
         <div>
           {prev && (
             <Link to={`/stage/${prev.id}`} className="group text-sm">
-              <span className="block text-[11px] uppercase tracking-[0.16em] text-zinc-600">Previous</span>
+              <span className="block text-[11px] uppercase tracking-[0.16em] text-zinc-600">
+                Previous
+              </span>
               <span className="text-zinc-300 group-hover:text-amber-200">← {prev.title}</span>
             </Link>
           )}
@@ -190,7 +198,9 @@ export default function StagePage() {
         <div className="text-right">
           {next && (
             <Link to={`/stage/${next.id}`} className="group text-sm">
-              <span className="block text-[11px] uppercase tracking-[0.16em] text-zinc-600">Next</span>
+              <span className="block text-[11px] uppercase tracking-[0.16em] text-zinc-600">
+                Next
+              </span>
               <span className="text-zinc-300 group-hover:text-amber-200">{next.title} →</span>
             </Link>
           )}

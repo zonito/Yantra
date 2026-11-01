@@ -21,10 +21,10 @@ export default function Varuna() {
         Varuna: one envelope for every vendor
       </h1>
       <p className="mt-3 max-w-2xl text-sm leading-relaxed text-zinc-400">
-        Varuna fans out to vendors (FMP, Massive, Yahoo, FINRA), caches aggressively, and
-        serves everything behind one envelope with TTLs, circuit breakers and per-source
-        cache metadata. Every engine — Agni, Airavata, Drona, Vidhura, Kubera — reads
-        through it. Nothing in the pipeline touches a vendor directly.
+        Varuna fans out to vendors (FMP, Massive, Yahoo, FINRA), caches aggressively, and serves
+        everything behind one envelope with TTLs, circuit breakers and per-source cache metadata.
+        Every engine — Agni, Airavata, Drona, Vidhura, Kubera — reads through it. Nothing in the
+        pipeline touches a vendor directly.
       </p>
 
       <h2 className="mt-12 text-xs font-semibold uppercase tracking-[0.18em] text-zinc-500">
@@ -77,14 +77,19 @@ export default function Varuna() {
             key={k}
             className={`grid gap-1 px-5 py-4 sm:grid-cols-[160px_1fr] sm:gap-4 ${i % 2 ? 'bg-zinc-900/30' : ''}`}
           >
-            <p className="text-[11px] font-semibold uppercase tracking-[0.14em] text-zinc-500">{k}</p>
+            <p className="text-[11px] font-semibold uppercase tracking-[0.14em] text-zinc-500">
+              {k}
+            </p>
             <p className="text-xs leading-relaxed text-zinc-300">{v}</p>
           </div>
         ))}
       </div>
 
       <div className="mt-10 flex flex-wrap gap-3">
-        <Link to="/stage/backfill" className="text-xs font-medium text-amber-300 hover:text-amber-200">
+        <Link
+          to="/stage/backfill"
+          className="text-xs font-medium text-amber-300 hover:text-amber-200"
+        >
           ← Nightly IV backfill
         </Link>
         <Link to="/agni" className="text-xs font-medium text-amber-300 hover:text-amber-200">
