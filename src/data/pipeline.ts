@@ -917,12 +917,6 @@ export const airavataReliability = [
   { title: 'Jev judges the boundary', body: 'The weighting shadow asks Jev full/half/ignore on the posture given tier, n and probability — snapshot numbers are ground truth, Jev judges only thin-reliability and noisy-context boundaries.' },
 ];
 
-export const satelliteApps: { name: string; port: string; role: string; detail: string }[] = [
-  { name: 'Kamadhenu', port: ':3005', role: 'Commodities', detail: 'Commodity briefs and detail reads for the macro sleeve of the briefings — not part of the wheel pipeline.' },
-  { name: 'Rashi', port: ':3007', role: 'Forex', detail: '65 currencies: rates, convert, history. Serves the briefings — not part of the wheel pipeline.' },
-  { name: 'Bhisma', port: ':3010', role: 'Health only', detail: 'Programmatic reads go through its internal functions; treat its published hit rates with skepticism. Not part of the wheel pipeline.' },
-];
-
 // ---------------------------------------------------------------------------
 // Pipeline apps with full pages — Kubera, Varuna, Drona, Vidhura
 // ---------------------------------------------------------------------------

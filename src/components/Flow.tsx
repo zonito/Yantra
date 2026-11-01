@@ -100,7 +100,10 @@ export function FlowDiagram() {
 
 export function OutputLink({ to }: { to: string }) {
   const target = nodeById(to)
-  if (!target) return null
+  if (!target) {
+    console.warn(`Yantra: output hand-off points at unknown node "${to}"`)
+    return null
+  }
   return (
     <Link
       to={`/stage/${to}`}

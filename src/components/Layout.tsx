@@ -110,8 +110,8 @@ class RouteErrorBoundary extends Component<{ children: ReactNode }, { error: str
   static getDerivedStateFromError(e: unknown) {
     return { error: e instanceof Error ? e.message : String(e) }
   }
-  componentDidCatch() {
-    this.setState({ error: this.state.error })
+  componentDidCatch(error: unknown, info: { componentStack?: string | null }) {
+    console.error('Route render failed:', error, info.componentStack ?? '')
   }
   render() {
     if (this.state.error) {
@@ -133,7 +133,7 @@ export function Breadcrumb({ trail }: { trail: { label: string; to?: string }[] 
   return (
     <nav className="mb-6 flex items-center gap-2 text-xs text-zinc-500">
       {trail.map((t, i) => (
-        <span key={t.label} className="flex items-center gap-2">
+        <span key={`${t.label}-${i}`} className="flex items-center gap-2">
           {i > 0 && <span className="text-zinc-700">/</span>}
           {t.to ? (
             <Link to={t.to} className="transition-colors hover:text-amber-300">
