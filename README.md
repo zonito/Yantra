@@ -26,6 +26,32 @@ npm run dev
 
 Open http://localhost:3014
 
+The live instance runs under launchd (`com.zonito.yantra.dev`, Vite dev
+server on port 3014 with `--host`, so it also answers on the tailnet).
+Restart it with `launchctl kickstart -k gui/$(id -u)/com.zonito.yantra.dev`.
+
+## Dev setup (hooks, checks, tests)
+
+One step after `npm install` on a fresh clone:
+
+```bash
+pipx install pre-commit   # or: brew install pre-commit
+pre-commit install
+```
+
+Hooks run hygiene checks, Prettier, ESLint, `tsc -b` type-checking and the
+fast test lane on every commit. There is no commit-msg hook: history does
+not follow Conventional Commits, so enforcing it would reject the repo's
+own style.
+
+```bash
+npm test            # vitest — pipeline data-model tests (fast lane)
+npm run lint        # eslint
+npm run format      # prettier --write
+npm run build       # tsc -b + production bundle
+pre-commit run --all-files   # every hook over the whole tree
+```
+
 ## Notes
 
 - Dev server port is **3014** (sibling apps already hold 3000–3013, 8000 and

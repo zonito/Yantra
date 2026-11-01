@@ -1,0 +1,44 @@
+# Yantra commit-time checks. Install once per clone: see README "Dev setup".
+# No commit-msg hook: git history does not follow Conventional Commits
+# (mixed "Add …" / "Yantra: …" / occasional "feat:"), so enforcing it now
+# would reject the repo's own style. Revisit if the convention is adopted.
+repos:
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v5.0.0
+    hooks:
+      - id: trailing-whitespace
+      - id: end-of-file-fixer
+      - id: check-yaml
+      - id: check-json
+      - id: check-toml
+      - id: check-merge-conflict
+      - id: check-added-large-files
+        args: ['--maxkb=500']
+  - repo: local
+    hooks:
+      - id: prettier
+        name: prettier
+        entry: npx prettier --write
+        language: system
+        types: [file]
+        files: \.(ts|tsx|js|jsx|json|css|html|md|yaml|yml)$
+      - id: eslint
+        name: eslint
+        entry: npx eslint
+        language: system
+        types: [file]
+        files: \.(ts|tsx)$
+      - id: typecheck
+        name: typecheck (tsc -b)
+        entry: npx tsc -b
+        language: system
+        pass_filenames: false
+        always_run: true
+        files: \.(ts|tsx)$
+      - id: test-fast
+        name: fast tests (vitest, 10s per-test timeout)
+        entry: npx vitest run
+        language: system
+        pass_filenames: false
+        always_run: true
+        files: \.(ts|tsx)$
