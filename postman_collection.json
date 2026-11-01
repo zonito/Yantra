@@ -1,0 +1,466 @@
+{
+  "info": {
+    "description": "Yantra — static SPA on Vite :3014. Every page path returns HTTP 200 with the SPA shell (text/html); the page is chosen client-side. No auth. Generated from, and kept consistent with, openapi.yaml — see AGENTS.md.",
+    "name": "Yantra",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "description": "Core pipeline walkthrough pages.",
+      "item": [
+        {
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('status is 200', function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "pm.test('content-type is html', function () {",
+                  "    pm.expect(pm.response.headers.get('Content-Type')).to.include('text/html');",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "name": "Flow home",
+          "request": {
+            "header": [],
+            "method": "GET",
+            "url": { "host": ["{{baseUrl}}"], "path": [] }
+          }
+        },
+        {
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('status is 200', function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "name": "Machinery",
+          "request": {
+            "header": [],
+            "method": "GET",
+            "url": { "host": ["{{baseUrl}}"], "path": ["machinery"] }
+          }
+        },
+        {
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('status is 200', function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "name": "Setu",
+          "request": {
+            "header": [],
+            "method": "GET",
+            "url": { "host": ["{{baseUrl}}"], "path": ["setu"] }
+          }
+        },
+        {
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('status is 200', function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "name": "Rules",
+          "request": {
+            "header": [],
+            "method": "GET",
+            "url": { "host": ["{{baseUrl}}"], "path": ["rules"] }
+          }
+        },
+        {
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('status is 200', function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "name": "Quality",
+          "request": {
+            "header": [],
+            "method": "GET",
+            "url": { "host": ["{{baseUrl}}"], "path": ["quality"] }
+          }
+        },
+        {
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('status is 200', function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "name": "Handoffs",
+          "request": {
+            "header": [],
+            "method": "GET",
+            "url": { "host": ["{{baseUrl}}"], "path": ["handoffs"] }
+          }
+        },
+        {
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('status is 200', function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "name": "Gaps",
+          "request": {
+            "header": [],
+            "method": "GET",
+            "url": { "host": ["{{baseUrl}}"], "path": ["gaps"] }
+          }
+        },
+        {
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('status is 200', function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "name": "Jev",
+          "request": {
+            "header": [],
+            "method": "GET",
+            "url": { "host": ["{{baseUrl}}"], "path": ["jev"] }
+          }
+        },
+        {
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('status is 200', function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "name": "Hedge",
+          "request": {
+            "header": [],
+            "method": "GET",
+            "url": { "host": ["{{baseUrl}}"], "path": ["hedge"] }
+          }
+        }
+      ],
+      "name": "Flow"
+    },
+    {
+      "description": "Per-node pipeline-stage page. Example id 'recommend' is a known node; any id returns 200 (unknown ids redirect client-side to /).",
+      "item": [
+        {
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('status is 200', function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "name": "Stage recommend",
+          "request": {
+            "header": [],
+            "method": "GET",
+            "url": { "host": ["{{baseUrl}}"], "path": ["stage", "recommend"] }
+          }
+        }
+      ],
+      "name": "Stages"
+    },
+    {
+      "description": "Engine deep-dive pages.",
+      "item": [
+        {
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('status is 200', function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "name": "Agni",
+          "request": {
+            "header": [],
+            "method": "GET",
+            "url": { "host": ["{{baseUrl}}"], "path": ["agni"] }
+          }
+        },
+        {
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('status is 200', function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "name": "Airavata",
+          "request": {
+            "header": [],
+            "method": "GET",
+            "url": { "host": ["{{baseUrl}}"], "path": ["airavata"] }
+          }
+        },
+        {
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('status is 200', function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "name": "Kubera",
+          "request": {
+            "header": [],
+            "method": "GET",
+            "url": { "host": ["{{baseUrl}}"], "path": ["kubera"] }
+          }
+        },
+        {
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('status is 200', function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "name": "Varuna",
+          "request": {
+            "header": [],
+            "method": "GET",
+            "url": { "host": ["{{baseUrl}}"], "path": ["varuna"] }
+          }
+        },
+        {
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('status is 200', function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "name": "Drona",
+          "request": {
+            "header": [],
+            "method": "GET",
+            "url": { "host": ["{{baseUrl}}"], "path": ["drona"] }
+          }
+        },
+        {
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('status is 200', function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "name": "Vidhura",
+          "request": {
+            "header": [],
+            "method": "GET",
+            "url": { "host": ["{{baseUrl}}"], "path": ["vidhura"] }
+          }
+        }
+      ],
+      "name": "Engines"
+    },
+    {
+      "description": "Satellite briefing pages.",
+      "item": [
+        {
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('status is 200', function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "name": "Kamadhenu",
+          "request": {
+            "header": [],
+            "method": "GET",
+            "url": { "host": ["{{baseUrl}}"], "path": ["kamadhenu"] }
+          }
+        },
+        {
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('status is 200', function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "name": "Rashi",
+          "request": {
+            "header": [],
+            "method": "GET",
+            "url": { "host": ["{{baseUrl}}"], "path": ["rashi"] }
+          }
+        },
+        {
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('status is 200', function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "name": "Bhisma",
+          "request": {
+            "header": [],
+            "method": "GET",
+            "url": { "host": ["{{baseUrl}}"], "path": ["bhisma"] }
+          }
+        }
+      ],
+      "name": "Satellites"
+    },
+    {
+      "description": "Static assets served verbatim from public/.",
+      "item": [
+        {
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('status is 200', function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "pm.test('content-type is svg', function () {",
+                  "    pm.expect(pm.response.headers.get('Content-Type')).to.include('image/svg+xml');",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "name": "Favicon",
+          "request": {
+            "header": [],
+            "method": "GET",
+            "url": { "host": ["{{baseUrl}}"], "path": ["favicon.svg"] }
+          }
+        }
+      ],
+      "name": "Static"
+    }
+  ],
+  "variable": [{ "key": "baseUrl", "value": "http://100.125.239.56:3014" }]
+}

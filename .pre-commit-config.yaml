@@ -42,3 +42,10 @@ repos:
         pass_filenames: false
         always_run: true
         files: \.(ts|tsx)$
+      - id: api-contract
+        name: api contract (openapi + collection + coverage diff)
+        entry: python3 scripts/check_docs.py
+        language: system
+        pass_filenames: false
+        always_run: true
+        files: \.(tsx|yaml|yml|json|svg)$

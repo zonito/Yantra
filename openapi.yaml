@@ -1,0 +1,387 @@
+openapi: 3.0.3
+info:
+  title: Yantra API
+  version: 0.1.0
+  description: |
+    Yantra — the living, interactive Kubera Wheel Pipeline Architecture.
+    This app has **no backend**: it is a static single-page application
+    (React + react-router, served by Vite on port 3014). Every path below is
+    served as `GET` returning the SPA shell (`index.html`, `text/html`,
+    HTTP 200); client-side routing then renders the page. There are no
+    POST/PUT/DELETE/PATCH endpoints, no query parameters, no request bodies,
+    and no authentication on anything this app serves.
+
+    Serving behaviour, verified against the code (`src/App.tsx`) and the live
+    instance:
+
+    * `GET /` renders the Flow home page.
+    * Each client route below returns HTTP 200 with the same shell; the page
+      is chosen client-side.
+    * `GET /stage/{id}` renders the pipeline-stage page for a known node id
+      (see the `id` enum). An unknown `id` still returns HTTP 200 — the
+      client redirects to `/` (`<Navigate to="/" replace />`).
+    * The router's catch-all (`path="*"`) renders Home, so **any otherwise
+      unknown path returns HTTP 200** with the shell instead of a 404.
+      This catch-all is intentional server behaviour, not an expressible
+      OpenAPI path, so it is documented here rather than as a path item.
+    * `GET /favicon.svg` serves the static icon (`image/svg+xml`, HTTP 200).
+
+    Deliberately excluded from this contract (not part of the app's API):
+
+    * Vite dev-only endpoints (`/@vite/client`, `/@react-refresh`,
+      `/src/*` module URLs, HMR websocket) — present only under `vite dev`,
+      never in preview/production builds.
+    * `/assets/*` hashed production bundles — present only in `dist/` after
+      `npm run build`, with content-hashed filenames that cannot be pinned
+      in a stable contract.
+
+    The sibling-service endpoints named inside page content (Kubera
+    `/api/v1/wheel/...`, Varuna `/v1/varuna/...`, Drona, Vidhura, Kamadhenu,
+    Rashi, Bhisma reads) are served by those apps, not by Yantra, and are
+    therefore out of scope here.
+  contact:
+    name: zonito/yantra
+  license:
+    name: Private — all rights reserved
+servers:
+  - url: http://100.125.239.56:3014
+    description: Live instance (tailnet) — Vite on port 3014
+  - url: http://localhost:3014
+    description: Local dev / preview — `npm run dev` or `npm run preview`
+tags:
+  - name: Flow
+    description: Core pipeline walkthrough pages (header nav).
+  - name: Stages
+    description: Per-node pipeline-stage deep dives (`/stage/:id`).
+  - name: Engines
+    description: Engine deep-dive pages (Agni, Airavata, Kubera, Varuna, Drona, Vidhura).
+  - name: Satellites
+    description: Satellite briefing pages (Kamadhenu, Rashi, Bhisma).
+  - name: Static
+    description: Static assets served verbatim from `public/`.
+paths:
+  /:
+    get:
+      tags:
+        - Flow
+      operationId: getHome
+      summary: Flow home page
+      description: Serves the SPA shell; the client renders the pipeline flow overview.
+      responses:
+        '200':
+          description: SPA shell HTML.
+          content:
+            text/html:
+              schema:
+                type: string
+                example: '<!doctype html><html lang="en"><div id="root"></div></html>'
+  /machinery:
+    get:
+      tags:
+        - Flow
+      operationId: getMachinery
+      summary: Scoring machinery page
+      description: Serves the SPA shell; the client renders the Sutradhara scoring-engine page.
+      responses:
+        '200':
+          description: SPA shell HTML.
+          content:
+            text/html:
+              schema:
+                type: string
+                example: '<!doctype html><html lang="en"><div id="root"></div></html>'
+  /setu:
+    get:
+      tags:
+        - Flow
+      operationId: getSetu
+      summary: Setu page
+      description: Serves the SPA shell; the client renders the Setu bridge page.
+      responses:
+        '200':
+          description: SPA shell HTML.
+          content:
+            text/html:
+              schema:
+                type: string
+                example: '<!doctype html><html lang="en"><div id="root"></div></html>'
+  /rules:
+    get:
+      tags:
+        - Flow
+      operationId: getRules
+      summary: Guardrails page
+      description: Serves the SPA shell; the client renders the 29-guardrail rules page.
+      responses:
+        '200':
+          description: SPA shell HTML.
+          content:
+            text/html:
+              schema:
+                type: string
+                example: '<!doctype html><html lang="en"><div id="root"></div></html>'
+  /quality:
+    get:
+      tags:
+        - Flow
+      operationId: getQuality
+      summary: Quality-model page
+      description: Serves the SPA shell; the client renders the quality-model page.
+      responses:
+        '200':
+          description: SPA shell HTML.
+          content:
+            text/html:
+              schema:
+                type: string
+                example: '<!doctype html><html lang="en"><div id="root"></div></html>'
+  /handoffs:
+    get:
+      tags:
+        - Flow
+      operationId: getHandoffs
+      summary: Handoff-contracts page
+      description: Serves the SPA shell; the client renders the handoff-contracts page.
+      responses:
+        '200':
+          description: SPA shell HTML.
+          content:
+            text/html:
+              schema:
+                type: string
+                example: '<!doctype html><html lang="en"><div id="root"></div></html>'
+  /gaps:
+    get:
+      tags:
+        - Flow
+      operationId: getGaps
+      summary: Gaps page
+      description: Serves the SPA shell; the client renders the five-gaps page.
+      responses:
+        '200':
+          description: SPA shell HTML.
+          content:
+            text/html:
+              schema:
+                type: string
+                example: '<!doctype html><html lang="en"><div id="root"></div></html>'
+  /jev:
+    get:
+      tags:
+        - Flow
+      operationId: getJev
+      summary: Jev shadow page
+      description: Serves the SPA shell; the client renders the Jev observer-shadow page.
+      responses:
+        '200':
+          description: SPA shell HTML.
+          content:
+            text/html:
+              schema:
+                type: string
+                example: '<!doctype html><html lang="en"><div id="root"></div></html>'
+  /hedge:
+    get:
+      tags:
+        - Flow
+      operationId: getHedge
+      summary: Hedge-doctrine page
+      description: Serves the SPA shell; the client renders the compounder-hedge doctrine page.
+      responses:
+        '200':
+          description: SPA shell HTML.
+          content:
+            text/html:
+              schema:
+                type: string
+                example: '<!doctype html><html lang="en"><div id="root"></div></html>'
+  /stage/{id}:
+    get:
+      tags:
+        - Stages
+      operationId: getStage
+      summary: Pipeline-stage page
+      description: >-
+        Serves the SPA shell; the client renders the stage page for the given
+        pipeline node. A known `id` renders that node; an unknown `id` still
+        returns HTTP 200 and the client redirects to `/`.
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: Pipeline node id (observer node `jev` included).
+          schema:
+            type: string
+            enum:
+              - ecosystem
+              - sutradhara
+              - backfill
+              - agni
+              - scoop
+              - dimmer
+              - recommend
+              - jev
+              - finalize
+              - execute
+              - hedge
+              - outcomes
+              - ledger
+            example: recommend
+      responses:
+        '200':
+          description: SPA shell HTML (unknown ids redirect client-side to `/`).
+          content:
+            text/html:
+              schema:
+                type: string
+                example: '<!doctype html><html lang="en"><div id="root"></div></html>'
+  /agni:
+    get:
+      tags:
+        - Engines
+      operationId: getAgni
+      summary: Agni engine page
+      description: Serves the SPA shell; the client renders the Agni IV-analytics page.
+      responses:
+        '200':
+          description: SPA shell HTML.
+          content:
+            text/html:
+              schema:
+                type: string
+                example: '<!doctype html><html lang="en"><div id="root"></div></html>'
+  /airavata:
+    get:
+      tags:
+        - Engines
+      operationId: getAiravata
+      summary: Airavata engine page
+      description: Serves the SPA shell; the client renders the Airavata posture page.
+      responses:
+        '200':
+          description: SPA shell HTML.
+          content:
+            text/html:
+              schema:
+                type: string
+                example: '<!doctype html><html lang="en"><div id="root"></div></html>'
+  /kubera:
+    get:
+      tags:
+        - Engines
+      operationId: getKubera
+      summary: Kubera book page
+      description: Serves the SPA shell; the client renders the Kubera wheel-book page.
+      responses:
+        '200':
+          description: SPA shell HTML.
+          content:
+            text/html:
+              schema:
+                type: string
+                example: '<!doctype html><html lang="en"><div id="root"></div></html>'
+  /varuna:
+    get:
+      tags:
+        - Engines
+      operationId: getVaruna
+      summary: Varuna data-plane page
+      description: Serves the SPA shell; the client renders the Varuna data-plane page.
+      responses:
+        '200':
+          description: SPA shell HTML.
+          content:
+            text/html:
+              schema:
+                type: string
+                example: '<!doctype html><html lang="en"><div id="root"></div></html>'
+  /drona:
+    get:
+      tags:
+        - Engines
+      operationId: getDrona
+      summary: Drona technicals page
+      description: Serves the SPA shell; the client renders the Drona technicals page.
+      responses:
+        '200':
+          description: SPA shell HTML.
+          content:
+            text/html:
+              schema:
+                type: string
+                example: '<!doctype html><html lang="en"><div id="root"></div></html>'
+  /vidhura:
+    get:
+      tags:
+        - Engines
+      operationId: getVidhura
+      summary: Vidhura valuation page
+      description: Serves the SPA shell; the client renders the Vidhura valuation page.
+      responses:
+        '200':
+          description: SPA shell HTML.
+          content:
+            text/html:
+              schema:
+                type: string
+                example: '<!doctype html><html lang="en"><div id="root"></div></html>'
+  /kamadhenu:
+    get:
+      tags:
+        - Satellites
+      operationId: getKamadhenu
+      summary: Kamadhenu commodities page
+      description: Serves the SPA shell; the client renders the Kamadhenu commodities page.
+      responses:
+        '200':
+          description: SPA shell HTML.
+          content:
+            text/html:
+              schema:
+                type: string
+                example: '<!doctype html><html lang="en"><div id="root"></div></html>'
+  /rashi:
+    get:
+      tags:
+        - Satellites
+      operationId: getRashi
+      summary: Rashi forex page
+      description: Serves the SPA shell; the client renders the Rashi forex page.
+      responses:
+        '200':
+          description: SPA shell HTML.
+          content:
+            text/html:
+              schema:
+                type: string
+                example: '<!doctype html><html lang="en"><div id="root"></div></html>'
+  /bhisma:
+    get:
+      tags:
+        - Satellites
+      operationId: getBhisma
+      summary: Bhisma flows page
+      description: Serves the SPA shell; the client renders the Bhisma congressional/whale page.
+      responses:
+        '200':
+          description: SPA shell HTML.
+          content:
+            text/html:
+              schema:
+                type: string
+                example: '<!doctype html><html lang="en"><div id="root"></div></html>'
+  /favicon.svg:
+    get:
+      tags:
+        - Static
+      operationId: getFavicon
+      summary: App icon
+      description: Serves the static favicon verbatim from `public/favicon.svg`.
+      responses:
+        '200':
+          description: SVG icon bytes.
+          content:
+            image/svg+xml:
+              schema:
+                type: string
+                format: binary
